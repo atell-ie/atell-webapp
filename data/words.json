@@ -1,0 +1,648 @@
+{
+    "words": [
+        {
+            "id": 1,
+            "word": "elephant",
+            "language": "English",
+            "ipa": "ˈɛləfənt"
+        },
+        {
+            "id": 2,
+            "word": "feather",
+            "language": "English",
+            "ipa": "ˈfɛðər"
+        },
+        {
+            "id": 3,
+            "word": "box",
+            "language": "English",
+            "ipa": "bɑks"
+        },
+        {
+            "id": 4,
+            "word": "flower",
+            "language": "English",
+            "ipa": "ˈflaʊər"
+        },
+        {
+            "id": 5,
+            "word": "knife",
+            "language": "English",
+            "ipa": "naɪf"
+        },
+        {
+            "id": 6,
+            "word": "pencil",
+            "language": "English",
+            "ipa": "ˈpɛnsəl"
+        },
+        {
+            "id": 7,
+            "word": "table",
+            "language": "English",
+            "ipa": "ˈteɪbəl"
+        },
+        {
+            "id": 8,
+            "word": "cat",
+            "language": "English",
+            "ipa": "kæt"
+        },
+        {
+            "id": 9,
+            "word": "dog",
+            "language": "English",
+            "ipa": "dɔɡ"
+        },
+        {
+            "id": 10,
+            "word": "fish",
+            "language": "English",
+            "ipa": "fɪʃ"
+        },
+        {
+            "id": 11,
+            "word": "apple",
+            "language": "English",
+            "ipa": "ˈæpəl"
+        },
+        {
+            "id": 12,
+            "word": "orange",
+            "language": "English",
+            "ipa": "ˈɔrɪndʒ"
+        },
+        {
+            "id": 13,
+            "word": "snake",
+            "language": "English",
+            "ipa": "sneɪk"
+        },
+        {
+            "id": 14,
+            "word": "phone",
+            "language": "English",
+            "ipa": "foʊn"
+        },
+        {
+            "id": 15,
+            "word": "sheep",
+            "language": "English",
+            "ipa": "ʃip"
+        },
+        {
+            "id": 16,
+            "word": "ball",
+            "language": "English",
+            "ipa": "bɔl"
+        },
+        {
+            "id": 17,
+            "word": "pig",
+            "language": "English",
+            "ipa": "pɪɡ"
+        },
+        {
+            "id": 18,
+            "word": "duck",
+            "language": "English",
+            "ipa": "dʌk"
+        },
+        {
+            "id": 19,
+            "word": "mouse",
+            "language": "English",
+            "ipa": "maʊs"
+        },
+        {
+            "id": 20,
+            "word": "rabbit",
+            "language": "English",
+            "ipa": "ˈræbɪt"
+        },
+        {
+            "id": 21,
+            "word": "tiger",
+            "language": "English",
+            "ipa": "ˈtaɪɡər"
+        },
+        {
+            "id": 22,
+            "word": "monkey",
+            "language": "English",
+            "ipa": "ˈmʌŋki"
+        },
+        {
+            "id": 23,
+            "word": "zebra",
+            "language": "English",
+            "ipa": "ˈzibrə"
+        },
+        {
+            "id": 24,
+            "word": "lion",
+            "language": "English",
+            "ipa": "ˈlaɪən"
+        },
+        {
+            "id": 25,
+            "word": "giraffe",
+            "language": "English",
+            "ipa": "dʒəˈræf"
+        },
+        {
+            "id": 26,
+            "word": "penguin",
+            "language": "English",
+            "ipa": "ˈpɛŋɡwɪn"
+        },
+        {
+            "id": 27,
+            "word": "butterfly",
+            "language": "English",
+            "ipa": "ˈbʌtərflaɪ"
+        },
+        {
+            "id": 28,
+            "word": "spider",
+            "language": "English",
+            "ipa": "ˈspaɪdər"
+        },
+        {
+            "id": 29,
+            "word": "turtle",
+            "language": "English",
+            "ipa": "ˈtɜrtəl"
+        },
+        {
+            "id": 30,
+            "word": "dolphin",
+            "language": "English",
+            "ipa": "ˈdɑlfɪn"
+        },
+        {
+            "id": 31,
+            "word": "chicken",
+            "language": "English",
+            "ipa": "ˈtʃɪkən"
+        },
+        {
+            "id": 32,
+            "word": "banana",
+            "language": "English",
+            "ipa": "bəˈnænə"
+        },
+        {
+            "id": 33,
+            "word": "carrot",
+            "language": "English",
+            "ipa": "ˈkærət"
+        },
+        {
+            "id": 34,
+            "word": "potato",
+            "language": "English",
+            "ipa": "pəˈteɪtoʊ"
+        },
+        {
+            "id": 35,
+            "word": "tomato",
+            "language": "English",
+            "ipa": "təˈmeɪtoʊ"
+        },
+        {
+            "id": 36,
+            "word": "lettuce",
+            "language": "English",
+            "ipa": "ˈlɛtəs"
+        },
+        {
+            "id": 37,
+            "word": "broccoli",
+            "language": "English",
+            "ipa": "ˈbrɑkəli"
+        },
+        {
+            "id": 38,
+            "word": "sandwich",
+            "language": "English",
+            "ipa": "ˈsænwɪtʃ"
+        },
+        {
+            "id": 39,
+            "word": "pizza",
+            "language": "English",
+            "ipa": "ˈpitsə"
+        },
+        {
+            "id": 40,
+            "word": "cookie",
+            "language": "English",
+            "ipa": "ˈkʊki"
+        },
+        {
+            "id": 41,
+            "word": "teacher",
+            "language": "English",
+            "ipa": "ˈtitʃər"
+        },
+        {
+            "id": 42,
+            "word": "doctor",
+            "language": "English",
+            "ipa": "ˈdɑktər"
+        },
+        {
+            "id": 43,
+            "word": "nurse",
+            "language": "English",
+            "ipa": "nɜrs"
+        },
+        {
+            "id": 44,
+            "word": "police",
+            "language": "English",
+            "ipa": "pəˈlis"
+        },
+        {
+            "id": 45,
+            "word": "firefighter",
+            "language": "English",
+            "ipa": "ˈfaɪərˌfaɪtər"
+        },
+        {
+            "id": 46,
+            "word": "pilot",
+            "language": "English",
+            "ipa": "ˈpaɪlət"
+        },
+        {
+            "id": 47,
+            "word": "artist",
+            "language": "English",
+            "ipa": "ˈɑrtɪst"
+        },
+        {
+            "id": 48,
+            "word": "singer",
+            "language": "English",
+            "ipa": "ˈsɪŋər"
+        },
+        {
+            "id": 49,
+            "word": "dancer",
+            "language": "English",
+            "ipa": "ˈdænsər"
+        },
+        {
+            "id": 50,
+            "word": "writer",
+            "language": "English",
+            "ipa": "ˈraɪtər"
+        },
+        {
+            "id": 51,
+            "word": "window",
+            "language": "English",
+            "ipa": "ˈwɪndoʊ"
+        },
+        {
+            "id": 52,
+            "word": "door",
+            "language": "English",
+            "ipa": "dɔr"
+        },
+        {
+            "id": 53,
+            "word": "chair",
+            "language": "English",
+            "ipa": "tʃɛr"
+        },
+        {
+            "id": 54,
+            "word": "lamp",
+            "language": "English",
+            "ipa": "læmp"
+        },
+        {
+            "id": 55,
+            "word": "clock",
+            "language": "English",
+            "ipa": "klɑk"
+        },
+        {
+            "id": 56,
+            "word": "bed",
+            "language": "English",
+            "ipa": "bɛd"
+        },
+        {
+            "id": 57,
+            "word": "pillow",
+            "language": "English",
+            "ipa": "ˈpɪloʊ"
+        },
+        {
+            "id": 58,
+            "word": "blanket",
+            "language": "English",
+            "ipa": "ˈblæŋkɪt"
+        },
+        {
+            "id": 59,
+            "word": "mirror",
+            "language": "English",
+            "ipa": "ˈmɪrər"
+        },
+        {
+            "id": 60,
+            "word": "picture",
+            "language": "English",
+            "ipa": "ˈpɪktʃər"
+        },
+        {
+            "id": 61,
+            "word": "garden",
+            "language": "English",
+            "ipa": "ˈɡɑrdən"
+        },
+        {
+            "id": 62,
+            "word": "flower",
+            "language": "English",
+            "ipa": "ˈflaʊər"
+        },
+        {
+            "id": 63,
+            "word": "tree",
+            "language": "English",
+            "ipa": "tri"
+        },
+        {
+            "id": 64,
+            "word": "grass",
+            "language": "English",
+            "ipa": "ɡræs"
+        },
+        {
+            "id": 65,
+            "word": "leaf",
+            "language": "English",
+            "ipa": "lif"
+        },
+        {
+            "id": 66,
+            "word": "cloud",
+            "language": "English",
+            "ipa": "klaʊd"
+        },
+        {
+            "id": 67,
+            "word": "rain",
+            "language": "English",
+            "ipa": "reɪn"
+        },
+        {
+            "id": 68,
+            "word": "snow",
+            "language": "English",
+            "ipa": "snoʊ"
+        },
+        {
+            "id": 69,
+            "word": "sun",
+            "language": "English",
+            "ipa": "sʌn"
+        },
+        {
+            "id": 70,
+            "word": "moon",
+            "language": "English",
+            "ipa": "mun"
+        },
+        {
+            "id": 71,
+            "word": "star",
+            "language": "English",
+            "ipa": "stɑr"
+        },
+        {
+            "id": 72,
+            "word": "rainbow",
+            "language": "English",
+            "ipa": "ˈreɪnˌboʊ"
+        },
+        {
+            "id": 73,
+            "word": "mountain",
+            "language": "English",
+            "ipa": "ˈmaʊntən"
+        },
+        {
+            "id": 74,
+            "word": "river",
+            "language": "English",
+            "ipa": "ˈrɪvər"
+        },
+        {
+            "id": 75,
+            "word": "ocean",
+            "language": "English",
+            "ipa": "ˈoʊʃən"
+        },
+        {
+            "id": 76,
+            "word": "beach",
+            "language": "English",
+            "ipa": "bitʃ"
+        },
+        {
+            "id": 77,
+            "word": "island",
+            "language": "English",
+            "ipa": "ˈaɪlənd"
+        },
+        {
+            "id": 78,
+            "word": "forest",
+            "language": "English",
+            "ipa": "ˈfɔrɪst"
+        },
+        {
+            "id": 79,
+            "word": "jungle",
+            "language": "English",
+            "ipa": "ˈdʒʌŋɡəl"
+        },
+        {
+            "id": 80,
+            "word": "desert",
+            "language": "English",
+            "ipa": "ˈdɛzərt"
+        },
+        {
+            "id": 81,
+            "word": "pencil",
+            "language": "English",
+            "ipa": "ˈpɛnsəl"
+        },
+        {
+            "id": 82,
+            "word": "paper",
+            "language": "English",
+            "ipa": "ˈpeɪpər"
+        },
+        {
+            "id": 83,
+            "word": "book",
+            "language": "English",
+            "ipa": "bʊk"
+        },
+        {
+            "id": 84,
+            "word": "scissors",
+            "language": "English",
+            "ipa": "ˈsɪzərz"
+        },
+        {
+            "id": 85,
+            "word": "crayon",
+            "language": "English",
+            "ipa": "ˈkreɪˌɑn"
+        },
+        {
+            "id": 86,
+            "word": "marker",
+            "language": "English",
+            "ipa": "ˈmɑrkər"
+        },
+        {
+            "id": 87,
+            "word": "glue",
+            "language": "English",
+            "ipa": "ɡlu"
+        },
+        {
+            "id": 88,
+            "word": "ruler",
+            "language": "English",
+            "ipa": "ˈrulər"
+        },
+        {
+            "id": 89,
+            "word": "eraser",
+            "language": "English",
+            "ipa": "ɪˈreɪsər"
+        },
+        {
+            "id": 90,
+            "word": "backpack",
+            "language": "English",
+            "ipa": "ˈbækˌpæk"
+        },
+        {
+            "id": 91,
+            "word": "shirt",
+            "language": "English",
+            "ipa": "ʃɜrt"
+        },
+        {
+            "id": 92,
+            "word": "pants",
+            "language": "English",
+            "ipa": "pænts"
+        },
+        {
+            "id": 93,
+            "word": "shoes",
+            "language": "English",
+            "ipa": "ʃuz"
+        },
+        {
+            "id": 94,
+            "word": "socks",
+            "language": "English",
+            "ipa": "sɑks"
+        },
+        {
+            "id": 95,
+            "word": "hat",
+            "language": "English",
+            "ipa": "hæt"
+        },
+        {
+            "id": 96,
+            "word": "coat",
+            "language": "English",
+            "ipa": "koʊt"
+        },
+        {
+            "id": 97,
+            "word": "scarf",
+            "language": "English",
+            "ipa": "skɑrf"
+        },
+        {
+            "id": 98,
+            "word": "gloves",
+            "language": "English",
+            "ipa": "ɡlʌvz"
+        },
+        {
+            "id": 99,
+            "word": "umbrella",
+            "language": "English",
+            "ipa": "ʌmˈbrɛlə"
+        },
+        {
+            "id": 100,
+            "word": "watch",
+            "language": "English",
+            "ipa": "wɑtʃ"
+        }
+    ],
+    "phonemeMap": {
+        "1": "i",
+        "2": "ɪ",
+        "3": "e",
+        "4": "ɛ",
+        "5": "æ",
+        "6": "ɑ",
+        "7": "ɔ",
+        "8": "o",
+        "9": "ʊ",
+        "10": "u",
+        "11": "ʌ",
+        "12": "ə",
+        "13": "ɚ",
+        "14": "aɪ",
+        "15": "aʊ",
+        "16": "eɪ",
+        "17": "oʊ",
+        "18": "ɔɪ",
+        "19": "p",
+        "20": "b",
+        "21": "t",
+        "22": "d",
+        "23": "k",
+        "24": "ɡ",
+        "25": "f",
+        "26": "v",
+        "27": "θ",
+        "28": "ð",
+        "29": "s",
+        "30": "z",
+        "31": "ʃ",
+        "32": "ʒ",
+        "33": "h",
+        "34": "tʃ",
+        "35": "dʒ",
+        "36": "m",
+        "37": "n",
+        "38": "ŋ",
+        "39": "l",
+        "40": "r",
+        "41": "w",
+        "42": "j"
+    }
+} 

@@ -1,0 +1,42 @@
+{
+    "analysis": "Analysis",
+    "analysisForUpload": "Analysis for the upload",
+
+    "billing": "Billing",
+
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "calendar": "Calendar",
+
+    "filename": "File name",
+
+    "home": "Home",
+
+    "ipa": "IPA",
+    "instances": "Instances",
+
+    "logout": "Logout",
+
+    "none": "None",
+    "newUpload": "New upload",
+
+    "playFullClip": "Play full clip",
+
+    "reports": "Reports",
+
+    "size": "Size",
+    "status": "Status",
+    "sessionInsight": "Insights",
+
+    "tasks": "Tasks",
+    "target": "Target",
+    "templates": "Templates",
+    "targetList": "Target list",
+
+    "users": "Clients",
+    "uploads": "Uploads",
+    "uploadName": "Upload name",
+    "uploadTime": "Upload time",
+
+    "wordsList": "Words list"
+}

@@ -1,0 +1,30 @@
+{
+    "assetSyncGeoLocations": "Failed to sync data and current geo location.",
+    "auditAssetsGet": "Failed to get audit assets",
+    "auditAssetSelect": "Failed to select audit assets by locations",
+    "auditDownloadGet": "Failed to download audits",
+    "auditUploadPost": "Failed to upload audit.\nPlease check your Internet connection and try again.",
+    "auditItemSelection": "Failed to select audit.",
+
+    "backgroundSync": "Error while syncing with the backgroud.",
+
+    "cameraSavePhoto": "Failed to save photo",
+    "cameraTakePhoto": "Failed to take photo",
+    "checkAltAsset": "Unable to check asset. Failed to aquire audit reference",
+    "checkAsset": "Error while checking asset",
+
+    "deferAsset": "Error while deffering the asset",
+
+    "excludeAsset": "Error while excluding asset",
+
+    "geoLocationGet": "Unable to get location. Please ensure location is enabled in the device settings and the app has been granted permission to access the device location.",
+
+    "invalidCharacters": "Invalid characters: {{invalidChar}}",
+    "ivalidIdentifier": "Invalid identifier",
+    "invalidEmail": "Invalid email address",
+
+    "loginFailure": "Unable to login with the credentials provided",
+
+    "maxLength": "Maximum length allowed: {{maxLength}}",
+    "minLength": "Minimum length required: {{minLength}}"
+}

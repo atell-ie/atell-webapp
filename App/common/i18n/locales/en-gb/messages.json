@@ -1,0 +1,8 @@
+{
+    "clickToUpload": "Click here to upload",
+
+    "dragAndDrop": "Drag and drop or click to upload a file",
+
+    "placeholderCopied": "Placeholder is copied",
+    "newClientSuccess": "Client account has been successfully created, and an email has been sent to the provided address."
+}

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Audits Empty Audits 1`] = `
+<div>
+  <div
+    class="makeStyles-messageContainer-9 MuiBox-root css-0"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-13t2ui7-MuiTypography-root"
+    >
+      No pending audits on this device.
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-13t2ui7-MuiTypography-root"
+    >
+      Tap to check for new audits.
+    </p>
+  </div>
+</div>
+`;

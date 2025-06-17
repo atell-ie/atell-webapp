@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/static/imgs/favicon.ico" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        <link rel="manifest" href="/static/manifest.json" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content="minimum-scale=1,initial-scale=1,width=device-width,shrink-to-fit=no"
+        />
+        <title>Auditor</title>
+        <style>
+            html,
+            body {
+                overscroll-behavior-y: contain;
+                height: auto;
+            }
+        </style>
+        <script defer src="/main.js?4be028d1682300fcd995"></script>
+    </head>
+
+    <body>
+        <noscript>This application requires JavaScript</noscript>
+        <div id="app-root" style="height: 100%; background: #f2f2f2"></div>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker
+                        .register("/serviceWorker.js")
+                        .then(
+                            function (registration) {
+                                console.log(
+                                    "Worker registration successful",
+                                    registration.scope
+                                );
+                            },
+                            function (err) {
+                                console.log("Worker registration failed", err);
+                            }
+                        )
+                        .catch(function (err) {
+                            console.log(err);
+                        });
+                });
+            } else {
+                console.log("Service Worker is not supported by browser.");
+            }
+        </script>
+    </body>
+</html>
