@@ -46,6 +46,7 @@
         "@react-pdf/renderer": "^3.1.9",
         "@sentry/react": "7.53.1",
         "@sentry/tracing": "7.53.1",
+        "ajv": "8",
         "axios": "^1.4.0",
         "babel-loader": "9.1.2",
         "babel-plugin-transform-imports": "2.0.0",

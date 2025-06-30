@@ -16,13 +16,19 @@ export default {
     viewImage: {
         width: "100%"
     },
-    uploadBox: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: 200,
-        border: "2px dashed gray",
-        borderRadius: 4
+uploadBox: {
+    border: "2px dashed #ccc",
+    borderRadius: "8px",
+    padding: "24px",
+    backgroundColor: "#fafafa",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    "&:hover": {
+        borderColor: "#2196f3",
+        backgroundColor: "#f0f7ff"
     }
+}
 };

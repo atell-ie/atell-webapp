@@ -26,10 +26,13 @@ const styles = {
         border: "2px dashed #ccc",
         borderRadius: "8px",
         padding: "24px",
-        textAlign: "center",
         backgroundColor: "#fafafa",
-        transition: "all 0.3s ease",
         cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        transition: "all 0.3s ease",
         "&:hover": {
             borderColor: "#2196f3",
             backgroundColor: "#f0f7ff"
@@ -45,16 +48,6 @@ const styles = {
         borderRadius: "4px",
         marginTop: "8px"
     },
-    uploadIcon: {
-        fontSize: "48px",
-        color: "#2196f3",
-        marginBottom: "16px"
-    },
-    form: {
-        "& .MuiTextField-root": {
-            marginBottom: "16px"
-        }
-    },
     uploadText: {
         color: "#666",
         marginBottom: "8px"
@@ -64,6 +57,11 @@ const styles = {
         fontWeight: "500",
         "&:hover": {
             color: "#1976d2"
+        }
+    },
+    form: {
+        "& .MuiTextField-root": {
+            marginBottom: "16px"
         }
     }
 };
@@ -139,69 +137,59 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
         setError("");
     };
 
-    const getModalControls = () => {
-        return (
-            <>
-                <Button 
-                    variant="outlined" 
-                    onClick={hdlClose}
-                    sx={{ 
-                        borderColor: "#e0e0e0",
-                        color: "#666",
-                        "&:hover": {
-                            borderColor: "#bdbdbd",
-                            backgroundColor: "#f5f5f5"
-                        }
-                    }}
-                >
-                    {t("cancel")}
-                </Button>
-                <LoadingButton
-                    loading={loading}
-                    variant="contained"
-                    onClick={handleUpload}
-                    disableElevation
-                    sx={{
-                        backgroundColor: "#2196f3",
-                        "&:hover": {
-                            backgroundColor: "#1976d2"
-                        }
-                    }}
-                >
-                    {t("confirm")}
-                </LoadingButton>
-            </>
-        );
-    };
+    const getModalControls = () => (
+        <>
+            <Button
+                variant="outlined"
+                onClick={hdlClose}
+                sx={{
+                    borderColor: "#e0e0e0",
+                    color: "#666",
+                    "&:hover": {
+                        borderColor: "#bdbdbd",
+                        backgroundColor: "#f5f5f5"
+                    }
+                }}
+            >
+                {t("cancel")}
+            </Button>
+            <LoadingButton
+                loading={loading}
+                variant="contained"
+                onClick={handleUpload}
+                disableElevation
+                sx={{
+                    backgroundColor: "#2196f3",
+                    "&:hover": {
+                        backgroundColor: "#1976d2"
+                    }
+                }}
+            >
+                {t("confirm")}
+            </LoadingButton>
+        </>
+    );
 
     return (
         <AppModal
-            title={t("newSession")}
+            title={t("New Session")}
             size="sm"
             isVisible={modalOpen}
             onClose={hdlClose}
             controls={getModalControls()}
         >
             <Paper elevation={0} sx={{ p: 2 }}>
-                <Grid container spacing={3} sx={styles.form}>
+                <Grid container spacing={2} direction="column">
                     {error && (
-                        <Grid item xs={12}>
-                            <Alert 
-                                severity="error"
-                                sx={{ 
-                                    borderRadius: "8px",
-                                    "& .MuiAlert-icon": {
-                                        color: "#f44336"
-                                    }
-                                }}
-                            >
+                        <Grid item>
+                            <Alert severity="error" sx={{ borderRadius: "8px" }}>
                                 {error}
                             </Alert>
                         </Grid>
                     )}
-                    <Grid item xs={12}>
+                    <Grid item>
                         <TextField
-                            label={t("sessionName")}
+                            label={t("Session Name")}
                             value={form.friendlyName}
                             onChange={hdlFieldChange("friendlyName")}
                             fullWidth
@@ -214,7 +202,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item>
                         <TextField
                             label={t("notes")}
                             value={form.notes}
@@ -230,50 +218,63 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Box
-                            onDrop={handleDrop}
-                            onDragOver={(event) => event.preventDefault()}
-                            sx={styles.uploadBox}
-                        >
-                            {selectedFile ? (
-                                <Box sx={styles.selectedFile}>
-                                    <AudioFileIcon sx={{ color: "#2196f3" }} />
-                                    <Typography variant="body1" sx={{ flex: 1 }}>
-                                        {selectedFile.name}
-                                    </Typography>
-                                    <IconButton 
-                                        size="small" 
-                                        onClick={clearSelectedFile}
-                                        sx={{ color: "#666" }}
+
+                    <Grid item>
+                        <label htmlFor="file-upload">
+                            <Box
+                                onDrop={handleDrop}
+                                onDragOver={(e) => e.preventDefault()}
+                                sx={styles.uploadBox}
+                            >
+                                {selectedFile ? (
+                                    <Box sx={styles.selectedFile}>
+                                        <AudioFileIcon sx={{ color: "#2196f3" }} />
+                                        <Typography variant="body1" sx={{ flex: 1 }}>
+                                            {selectedFile.name}
+                                        </Typography>
+                                        <IconButton
+                                            size="small"
+                                            onClick={clearSelectedFile}
+                                            sx={{ color: "#666" }}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </Box>
+                                ) : (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }}
                                     >
-                                        <CloseIcon />
-                                    </IconButton>
-                                </Box>
-                            ) : (
-                                <>
-                                    <CloudUploadIcon sx={styles.uploadIcon} />
-                                    <Typography variant="body1" sx={styles.uploadText}>
-                                        {t("messages.dragAndDropAudio")}
-                                    </Typography>
-                                    <Typography variant="body2" sx={styles.uploadButton}>
-                                        {t("messages.clickToUpload")}
-                                    </Typography>
-                                </>
-                            )}
-                            <input
-                                type="file"
-                                accept="audio/*"
-                                id="file-upload"
-                                style={{ display: "none" }}
-                                onChange={handleFileSelect}
-                            />
-                        </Box>
+                                        <CloudUploadIcon sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />
+                                        <Typography variant="body1" sx={styles.uploadText}>
+                                            {t("messages.dragAndDropAudio", "Drag and drop an audio file here")}
+                                        </Typography>
+                                        <Typography variant="body2" sx={styles.uploadButton}>
+                                            {t("messages.clickToUpload", "Click here to upload")}
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Box>
+                        </label>
                     </Grid>
                 </Grid>
             </Paper>
+
+            {/* Moved outside to avoid layout issues */}
+            <input
+                type="file"
+                accept="audio/*"
+                id="file-upload"
+                style={{ display: "none" }}
+                onChange={handleFileSelect}
+            />
         </AppModal>
     );
 };
 
 export default UploadSession;
+
