@@ -8,14 +8,18 @@ export const actionTypes = {
     SESSIONS_GET_SUCCESS: "SESSIONS_GET_SUCCESS",
     SESSIONS_GET_FAILURE: "SESSIONS_GET_FAILURE",
 
+    SESSION_GET: "SESSION_GET",
+    SESSION_GET_SUCCESS: "SESSION_GET_SUCCESS",
+    SESSION_GET_FAILURE: "SESSION_GET_FAILURE",
+
     SESSIONS_POST: "SESSIONS_POST",
     SESSIONS_POST_SUCCESS: "SESSIONS_POST_SUCCESS",
     SESSIONS_POST_FAILURE: "SESSIONS_POST_FAILURE",
 
     SESSIONS_PUT: "SESSIONS_PUT",
     SESSIONS_PUT_SUCCESS: "SESSIONS_PUT_SUCCESS",
-    SESSIONS_PUT_FAILURE: "SESSIONS_PUT_FAILURE",
-};  
+    SESSIONS_PUT_FAILURE: "SESSIONS_PUT_FAILURE"
+};
 
 export const actionCreators = {
     itemClear: () => ({
@@ -43,13 +47,27 @@ export const actionCreators = {
         type: actionTypes.SESSIONS_GET_FAILURE,
         error
     }),
-
+    getSessionById: (id: string) => ({
+        type: actionTypes.SESSION_GET,
+        payload: { id },
+        [WAIT_FOR_ACTION]: actionTypes.SESSION_GET_SUCCESS,
+        [ERROR_ACTION]: actionTypes.SESSION_GET_FAILURE
+    }),
+    getSessionByIdSuccess: (session: any) => ({
+        type: actionTypes.SESSION_GET_SUCCESS,
+        payload: { session },
+        saveReduxState: true
+    }),
+    getSessionByIdFailure: (error: Error) => ({
+        type: actionTypes.SESSION_GET_FAILURE,
+        error
+    }),
     postSessions: (sessionData: any) => ({
         type: actionTypes.SESSIONS_POST,
         payload: { sessionData },
         [WAIT_FOR_ACTION]: actionTypes.SESSIONS_POST_SUCCESS,
         [ERROR_ACTION]: actionTypes.SESSIONS_POST_FAILURE
-    }),     
+    }),
     postSessionsSuccess: (newSessionData: any) => ({
         type: actionTypes.SESSIONS_POST_SUCCESS,
         payload: { newSessionData },
@@ -74,8 +92,8 @@ export const actionCreators = {
     putSessionsFailure: (error: Error) => ({
         type: actionTypes.SESSIONS_PUT_FAILURE,
         error
-    }),
-}
+    })
+};
 export default {
     create: actionCreators,
     type: actionTypes

@@ -14,6 +14,17 @@ const Results = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        async function fetchSession() {
+            await dispatch(actions.sessions.create.getSessionById(sessionId));
+        }
+
+        async function fetchTargetList() {
+            await dispatch(actions.targetWordsList.create.getTargetList());
+            setLoading(false);
+        }
+        fetchSession();
+        fetchTargetList();
+
         // Check if data is already loaded for this session
         if (results.data && results.data.length > 0) {
             setLoading(false);
@@ -49,7 +60,7 @@ const Results = () => {
 
             fetchData();
         }
-    }, [sessionId, results.data, dispatch]);
+    }, [sessionId]);
 
     if (loading)
         return (

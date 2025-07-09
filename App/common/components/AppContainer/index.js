@@ -7,7 +7,7 @@ export default ({ children }) => {
             sx={{
                 padding: "1rem 0",
                 background: "#fff",
-                borderRadius: "1rem",
+                borderRadius: ".3rem",
                 height: 600,
                 width: "100%"
             }}

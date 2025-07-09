@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import actions from "../Store/actions";
 
@@ -12,7 +12,8 @@ import {
     Typography,
     Alert,
     Paper,
-    IconButton
+    IconButton,
+    MenuItem
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -51,6 +52,8 @@ const styles = {
         marginBottom: "16px"
     },
     form: {
+        flexDirection: "column",
+        padding: "1rem",
         "& .MuiTextField-root": {
             marginBottom: "16px"
         }
@@ -72,13 +75,15 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { journeyId } = useParams();
+    const { targetWordsList } = useSelector((state) => state);
 
     const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState("");
     const [form, setForm] = useState({
         notes: "",
-        friendlyName: ""
+        friendlyName: "",
+        targetListId: ""
     });
 
     const handleUpload = async () => {
@@ -92,15 +97,32 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                 setError(t("errors.sessionNameRequired"));
                 return;
             }
+            if (!form.targetListId) {
+                setError(t("errors.targetListRequired"));
+                return;
+            }
+            if (!journeyId) {
+                setError("Journey ID is missing");
+                return;
+            }
 
             setLoading(true);
             const formData = new FormData();
-            formData.append("mediaFile", selectedFile);
-            formData.append("notes", form.notes);
-            formData.append("friendlyName", form.friendlyName);
-            formData.append("journeyId", journeyId);
 
-            await dispatch(actions.sessions.create.postSession(formData));
+            formData.append("media_file", selectedFile);
+            formData.append("media_type", "audio");
+            // Extract format from file extension, not MIME type
+            const fileExtension = selectedFile.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+            formData.append("format", fileExtension);
+            formData.append("name", form.friendlyName);
+            formData.append("journey", journeyId);
+            formData.append("target_list", form.targetListId);
+            formData.append("notes", form.notes);
+
+            await dispatch(actions.sessions.create.postSessions(formData));
             setModalOpen(false);
         } catch (err) {
             setError(t("errors.uploadFailed"));
@@ -139,13 +161,17 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
         setError("");
     };
 
+    const handleBoxClick = () => {
+        document.getElementById("file-upload").click();
+    };
+
     const getModalControls = () => {
         return (
             <>
-                <Button 
-                    variant="outlined" 
+                <Button
+                    variant="outlined"
                     onClick={hdlClose}
-                    sx={{ 
+                    sx={{
                         borderColor: "#e0e0e0",
                         color: "#666",
                         "&:hover": {
@@ -182,96 +208,123 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
             onClose={hdlClose}
             controls={getModalControls()}
         >
-            <Paper elevation={0} sx={{ p: 2 }}>
-                <Grid container spacing={3} sx={styles.form}>
-                    {error && (
-                        <Grid item xs={12}>
-                            <Alert 
-                                severity="error"
-                                sx={{ 
-                                    borderRadius: "8px",
-                                    "& .MuiAlert-icon": {
-                                        color: "#f44336"
-                                    }
-                                }}
-                            >
-                                {error}
-                            </Alert>
-                        </Grid>
-                    )}
+            <Grid container spacing={3} sx={styles.form}>
+                {error && (
                     <Grid item xs={12}>
-                        <TextField
-                            label={t("sessionName")}
-                            value={form.friendlyName}
-                            onChange={hdlFieldChange("friendlyName")}
-                            fullWidth
-                            variant="outlined"
-                            required
+                        <Alert
+                            severity="error"
                             sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius: "8px"
+                                borderRadius: "8px",
+                                "& .MuiAlert-icon": {
+                                    color: "#f44336"
                                 }
                             }}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            label={t("notes")}
-                            value={form.notes}
-                            onChange={hdlFieldChange("notes")}
-                            fullWidth
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius: "8px"
-                                }
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Box
-                            onDrop={handleDrop}
-                            onDragOver={(event) => event.preventDefault()}
-                            sx={styles.uploadBox}
                         >
-                            {selectedFile ? (
-                                <Box sx={styles.selectedFile}>
-                                    <AudioFileIcon sx={{ color: "#2196f3" }} />
-                                    <Typography variant="body1" sx={{ flex: 1 }}>
-                                        {selectedFile.name}
-                                    </Typography>
-                                    <IconButton 
-                                        size="small" 
-                                        onClick={clearSelectedFile}
-                                        sx={{ color: "#666" }}
-                                    >
-                                        <CloseIcon />
-                                    </IconButton>
-                                </Box>
-                            ) : (
-                                <>
-                                    <CloudUploadIcon sx={styles.uploadIcon} />
-                                    <Typography variant="body1" sx={styles.uploadText}>
-                                        {t("messages.dragAndDropAudio")}
-                                    </Typography>
-                                    <Typography variant="body2" sx={styles.uploadButton}>
-                                        {t("messages.clickToUpload")}
-                                    </Typography>
-                                </>
-                            )}
-                            <input
-                                type="file"
-                                accept="audio/*"
-                                id="file-upload"
-                                style={{ display: "none" }}
-                                onChange={handleFileSelect}
-                            />
-                        </Box>
+                            {error}
+                        </Alert>
                     </Grid>
+                )}
+                <Grid item xs={12}>
+                    <TextField
+                        label={t("sessionName")}
+                        value={form.friendlyName}
+                        onChange={hdlFieldChange("friendlyName")}
+                        fullWidth
+                        variant="outlined"
+                        required
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "8px"
+                            }
+                        }}
+                    />
                 </Grid>
-            </Paper>
+                <Grid item xs={12}>
+                    <TextField
+                        label={t("targetWordsList") || "Target Words List"}
+                        value={form.targetListId}
+                        onChange={hdlFieldChange("targetListId")}
+                        fullWidth
+                        variant="outlined"
+                        select
+                        required
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "8px"
+                            }
+                        }}
+                    >
+                        {targetWordsList.data.map((targetList) => (
+                            <MenuItem key={targetList.id} value={targetList.id}>
+                                {targetList.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        label={t("notes")}
+                        value={form.notes}
+                        onChange={hdlFieldChange("notes")}
+                        fullWidth
+                        variant="outlined"
+                        multiline
+                        rows={4}
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                borderRadius: "8px"
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Box
+                        onDrop={handleDrop}
+                        onDragOver={(event) => event.preventDefault()}
+                        onClick={handleBoxClick}
+                        sx={styles.uploadBox}
+                    >
+                        {selectedFile ? (
+                            <Box sx={styles.selectedFile}>
+                                <AudioFileIcon sx={{ color: "#2196f3" }} />
+                                <Typography variant="body1" sx={{ flex: 1 }}>
+                                    {selectedFile.name}
+                                </Typography>
+                                <IconButton
+                                    size="small"
+                                    onClick={clearSelectedFile}
+                                    sx={{ color: "#666" }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
+                        ) : (
+                            <>
+                                <CloudUploadIcon sx={styles.uploadIcon} />
+                                <Typography
+                                    variant="body1"
+                                    sx={styles.uploadText}
+                                >
+                                    {t("messages.dragAndDropAudio")}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={styles.uploadButton}
+                                >
+                                    {t("messages.clickToUpload")}
+                                </Typography>
+                            </>
+                        )}
+                        <input
+                            type="file"
+                            accept="audio/*"
+                            id="file-upload"
+                            style={{ display: "none" }}
+                            onChange={handleFileSelect}
+                        />
+                    </Box>
+                </Grid>
+            </Grid>
         </AppModal>
     );
 };

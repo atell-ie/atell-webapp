@@ -4,7 +4,6 @@ import { actionTypes } from "./actions";
 
 const initialState = getInitialState.list();
 
-
 export default function (state = { ...initialState }, action) {
     switch (action.type) {
         case actionTypes.SESSIONS_ITEM_SET: {
@@ -14,6 +13,10 @@ export default function (state = { ...initialState }, action) {
         case actionTypes.SESSIONS_GET_SUCCESS: {
             const { sessions } = action.payload;
             return list.getReducer(state, sessions);
+        }
+        case actionTypes.SESSION_GET_SUCCESS: {
+            const { session } = action.payload;
+            return { ...state, item: session };
         }
         case actionTypes.SESSIONS_POST_SUCCESS: {
             const { newSessionData } = action.payload;
@@ -27,7 +30,9 @@ export default function (state = { ...initialState }, action) {
             const { updatedSessionData } = action.payload;
 
             const sessions = [...state.data];
-            const index = sessions.findIndex(session => session.id === updatedSessionData.id);
+            const index = sessions.findIndex(
+                (session) => session.id === updatedSessionData.id
+            );
             if (index !== -1) {
                 sessions[index] = updatedSessionData;
             }

@@ -12,12 +12,10 @@ import AppHeader from "../common/components/AppHeader";
 import AppContainer from "../common/components/AppContainer";
 import UploadSession from "./UploadSession";
 import useColumns from "./useColumns";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Uploads = () => {
-
-    const {journeyId} = useParams();
+    const { journeyId } = useParams();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -32,6 +30,11 @@ const Uploads = () => {
             await dispatch(actions.sessions.create.getSessions(journeyId));
             setLoading(false);
         }
+        async function fetchTargetList() {
+            await dispatch(actions.targetWordsList.create.getTargetList());
+            setLoading(false);
+        }
+        fetchTargetList();
         fetchSessions();
     }, []);
 
@@ -53,7 +56,7 @@ const Uploads = () => {
                     <Grid item>
                         <Button
                             variant="outlined"
-                            onClick={() => navigate('/auth/journeys')}
+                            onClick={() => navigate("/auth/journeys")}
                             startIcon={<ArrowBackIcon />}
                         >
                             Back to Journey
