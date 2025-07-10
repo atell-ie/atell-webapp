@@ -210,7 +210,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
         >
             <Grid container spacing={3} sx={styles.form}>
                 {error && (
-                    <Grid item xs={12}>
+                    <Grid xs={12}>
                         <Alert
                             severity="error"
                             sx={{
@@ -224,7 +224,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                         </Alert>
                     </Grid>
                 )}
-                <Grid item xs={12}>
+                <Grid xs={12}>
                     <TextField
                         label={t("sessionName")}
                         value={form.friendlyName}
@@ -239,7 +239,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid xs={12}>
                     <TextField
                         label={t("targetWordsList") || "Target Words List"}
                         value={form.targetListId}
@@ -261,7 +261,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid xs={12}>
                     <TextField
                         label={t("notes")}
                         value={form.notes}
@@ -277,7 +277,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid xs={12}>
                     <Box
                         onDrop={handleDrop}
                         onDragOver={(event) => event.preventDefault()}

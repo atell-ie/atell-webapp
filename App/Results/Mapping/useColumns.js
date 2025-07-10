@@ -1,9 +1,9 @@
 import React, { memo, useMemo } from "react";
 import { useSelector } from "react-redux";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { IconButton, TextField, MenuItem, Box, Chip } from "@mui/material";
+import { TextField, MenuItem, Box, Chip } from "@mui/material";
+import { AudioPlayer } from "../../common/components";
 
-const useColumns = ({ onPlay, hdlFieldChange }) => {
+const useColumns = ({ hdlFieldChange }) => {
     const { targetWordsList, results, sessions } = useSelector(
         (state) => state
     );
@@ -53,13 +53,24 @@ const useColumns = ({ onPlay, hdlFieldChange }) => {
 
         const sessionWordList = getSessionWordList();
 
+        // Get all valid option IDs (session word list + None option)
+        const validOptionIds = [
+            ...sessionWordList.map((option) => option.id),
+            0
+        ];
+
+        // Validate defaultValue - if it doesn't exist in valid options, fall back to 0 (None)
+        const validatedDefaultValue = validOptionIds.includes(defaultValue)
+            ? defaultValue
+            : 0;
+
         return (
             <TextField
                 id="outlined-select-target"
                 select
                 fullWidth
                 size="small"
-                defaultValue={defaultValue}
+                defaultValue={validatedDefaultValue}
                 onChange={hdlFieldChange(mappingId)}
                 sx={{ paddingTop: "0.3rem" }}
             >
@@ -75,19 +86,63 @@ const useColumns = ({ onPlay, hdlFieldChange }) => {
         );
     });
 
+    // Get the session media URL for the audio player
+    const getSessionMediaUrl = () => {
+        if (sessions.item && sessions.item[0] && sessions.item[0].mediaFile) {
+            return sessions.item[0].mediaFile.mediaFile;
+        }
+        return null;
+    };
+
+    const getSessionMediaFileName = () => {
+        if (sessions.item && sessions.item[0] && sessions.item[0].mediaFile) {
+            return (
+                sessions.item[0].mediaFile.friendlyName ||
+                sessions.item[0].mediaFile.mediaFile.split("/").pop()
+            );
+        }
+        return "Audio";
+    };
+
+    const sessionMediaUrl = getSessionMediaUrl();
+    const sessionMediaFileName = getSessionMediaFileName();
+
     return [
         {
             field: "play",
             headerName: "Play",
-            minWidth: 80,
+            minWidth: 100,
             align: "left",
             headerAlign: "left",
             sortable: false,
-            renderCell: (params) => (
-                <IconButton onClick={() => onPlay(params.row)}>
-                    <PlayCircleOutlineIcon />
-                </IconButton>
-            )
+            renderCell: (params) => {
+                if (!sessionMediaUrl) {
+                    return null; // No audio available
+                }
+                return (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: "100%"
+                        }}
+                    >
+                        <AudioPlayer
+                            mediaUrl={sessionMediaUrl}
+                            fileName={sessionMediaFileName}
+                            playId={`word-${params.row.id}`}
+                            showFileName={false}
+                            showTime={false}
+                            showStopButton={false}
+                            startTime={params.row.startTime}
+                            endTime={params.row.endTime}
+                            size="small"
+                            color="primary"
+                        />
+                    </Box>
+                );
+            }
         },
         {
             field: "foundWord",

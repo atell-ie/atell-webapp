@@ -7,3 +7,4 @@ export { default as Logo } from "./Logo";
 export { default as LoginLogo } from "./LoginLogo";
 //export { default as Toaster } from "./old__Toaster";
 export { default as ActionBar } from "./ActionBar";
+export { default as AudioPlayer } from "./AudioPlayer";

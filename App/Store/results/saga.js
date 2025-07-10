@@ -21,13 +21,21 @@ function* patchResults(action) {
 
     try {
         const { data } = yield call(http.authorized.patch, url, updData);
-        console.log("data----", data);
-        // // console.log("getting data", data);
-        // console.log("fakeData.results", camelizeKeys(fakeData.results));
-        // const data = camelizeKeys(fakeData);
         yield put(actionCreators.patchResultsSuccess(data));
     } catch (error) {
         yield put(actionCreators.patchResultsFailure(error.toString()));
+    }
+}
+
+function* patchResultTarget(action) {
+    const { updData, resultTargetId } = action.payload;
+    const url = `${config.api.baseUrl}/${config.api.urls.analysisResults}${resultTargetId}/`;
+
+    try {
+        const { data } = yield call(http.authorized.patch, url, updData);
+        yield put(actionCreators.patchResultTargetSuccess(data));
+    } catch (error) {
+        yield put(actionCreators.patchResultTargetFailure(error.toString()));
     }
 }
 
@@ -36,6 +44,7 @@ export { getResults, patchResults };
 export default (function* () {
     yield all([
         takeLatest(actionTypes.GET_RESULTS, getResults),
-        takeLatest(actionTypes.PATCH_RESULTS, patchResults)
+        takeLatest(actionTypes.PATCH_RESULTS, patchResults),
+        takeLatest(actionTypes.PATCH_RESULT_TARGET, patchResultTarget)
     ]);
 })();

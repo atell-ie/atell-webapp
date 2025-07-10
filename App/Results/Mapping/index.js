@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useCallback, memo, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import actions from "../../Store/actions";
 import useColumns from "./useColumns";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { Box, Button, CircularProgress, Typography, Chip } from "@mui/material";
+import { Box, Button, Typography, Chip } from "@mui/material";
 
 import AppContainer from "../../common/components/AppContainer";
 import DoneIcon from "@mui/icons-material/Done";
 
-import targets from "./targets";
-
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import InfoIcon from "@mui/icons-material/Info";
 
 import styles from "./styles";
@@ -26,6 +23,8 @@ const Mapping = () => {
     const [saving, setSaving] = useState(false);
 
     const { results } = useSelector((state) => state);
+
+    console.log("results.data", results.data);
 
     // Generate speaker colors for legend (matching the colors in useColumns)
     const speakerLegendColors = useMemo(() => {
@@ -71,10 +70,6 @@ const Mapping = () => {
     };
 
     const columns = useColumns({
-        onPlay: (row) => {
-            // Implement play logic here if needed
-            console.log("Play audio for:", row);
-        },
         hdlFieldChange
     });
 

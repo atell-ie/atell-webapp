@@ -60,7 +60,7 @@ const Results = () => {
 
             fetchData();
         }
-    }, [sessionId]);
+    }, []);
 
     if (loading)
         return (

@@ -53,7 +53,7 @@ const Uploads = () => {
         <>
             <AppHeader>
                 <Grid container spacing={2} alignItems="center">
-                    <Grid item>
+                    <Grid>
                         <Button
                             variant="outlined"
                             onClick={() => navigate("/auth/journeys")}
@@ -62,8 +62,8 @@ const Uploads = () => {
                             Back to Journey
                         </Button>
                     </Grid>
-                    <Grid item xs />
-                    <Grid item>
+                    <Grid />
+                    <Grid>
                         <Button
                             variant="contained"
                             onClick={hdlNewUpload}

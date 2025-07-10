@@ -10,7 +10,11 @@ export const actionTypes = {
 
     PATCH_RESULTS: "PATCH_RESULTS",
     PATCH_RESULTS_SUCCESS: "PATCH_RESULTS_SUCCESS",
-    PATCH_RESULTS_FAILURE: "PATCH_RESULTS_FAILURE"
+    PATCH_RESULTS_FAILURE: "PATCH_RESULTS_FAILURE",
+
+    PATCH_RESULT_TARGET: "PATCH_RESULT_TARGET",
+    PATCH_RESULT_TARGET_SUCCESS: "PATCH_RESULT_TARGET_SUCCESS",
+    PATCH_RESULT_TARGET_FAILURE: "PATCH_RESULT_TARGET_FAILURE"
 };
 
 export const actionCreators = {
@@ -20,7 +24,7 @@ export const actionCreators = {
     }),
     updateData: (data: any) => ({
         type: actionTypes.UPDATE_DATA,
-        payload: { data }   
+        payload: { data }
     }),
 
     getResults: (sessionId: inteteger) => ({
@@ -52,6 +56,22 @@ export const actionCreators = {
     }),
     patchResultssFailure: (error: Error) => ({
         type: actionTypes.PATCH_RESULTS_FAILURE,
+        error
+    }),
+
+    patchResultTarget: (updData: any, resultTargetId: integer) => ({
+        type: actionTypes.PATCH_RESULT_TARGET,
+        payload: { updData, resultTargetId },
+        [WAIT_FOR_ACTION]: actionTypes.PATCH_RESULT_TARGET_SUCCESS,
+        [ERROR_ACTION]: actionTypes.PATCH_RESULT_TARGET_FAILURE
+    }),
+    patchResultTargetSuccess: (patchedData: any) => ({
+        type: actionTypes.PATCH_RESULT_TARGET_SUCCESS,
+        payload: { patchedData },
+        saveReduxState: true
+    }),
+    patchResultTargetFailure: (error: Error) => ({
+        type: actionTypes.PATCH_RESULT_TARGET_FAILURE,
         error
     })
 };

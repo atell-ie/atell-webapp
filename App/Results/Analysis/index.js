@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../Store/actions";
 
-import { Box, Grid, Button, IconButton, Typography } from "@mui/material";
+import { Box, Grid, Button, Typography } from "@mui/material";
 
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import { AudioPlayer } from "../../common/components";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import List from "@mui/material/List";
@@ -14,13 +14,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 
 import InstanceList from "./InstanceList";
-import { useTargetWordInstances } from "../../common/components/InstancePhonemes";
-
-const severityMapping = {
-    warning: "Review",
-    error: "Failed",
-    success: "All good"
-};
 
 function getUniqueTargetWordIgs(mappingsData) {
     const uniqueIds = {};
@@ -40,9 +33,7 @@ const Analysis = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { state } = useLocation();
-
-    const { results, resultsManager, wordsList } = useSelector(
+    const { results, resultsManager, wordsList, sessions } = useSelector(
         (state) => state
     );
 
@@ -54,11 +45,31 @@ const Analysis = () => {
     const [targetProgress, setTargetProgress] = useState({});
     const [maxEnabledIndex, setMaxEnabledIndex] = useState(0);
 
-    useEffect(() => {
-        let uniqueIds = {};
+    // Create a unique key for this session's progress
+    const progressKey = `analysis_progress_${sessionId}`;
+    const maxEnabledKey = `analysis_max_enabled_${sessionId}`;
 
+    // Load cached progress on component mount
+    useEffect(() => {
+        try {
+            const cachedProgress = localStorage.getItem(progressKey);
+            const cachedMaxEnabled = localStorage.getItem(maxEnabledKey);
+
+            if (cachedProgress) {
+                setTargetProgress(JSON.parse(cachedProgress));
+            }
+
+            if (cachedMaxEnabled) {
+                setMaxEnabledIndex(parseInt(cachedMaxEnabled, 10));
+            }
+        } catch (error) {
+            console.error("Error loading cached analysis progress:", error);
+        }
+    }, [sessionId]);
+
+    useEffect(() => {
         const fetchData = async () => {
-            uniqueIds = getUniqueTargetWordIgs(results.data);
+            const uniqueIds = getUniqueTargetWordIgs(results.data);
 
             await dispatch(
                 actions.wordIpas.create.getWordIpas(
@@ -77,8 +88,8 @@ const Analysis = () => {
             );
         };
 
-        fetchData();
-    }, []);
+        if (results.data.length > 0) fetchData();
+    }, [results.data]);
 
     useEffect(() => {
         const nonEmptyData = results.data.filter((item) => item.targetWord);
@@ -101,8 +112,17 @@ const Analysis = () => {
     }, [results, targetProgress]);
 
     useEffect(() => {
-        setMaxEnabledIndex((prev) => Math.max(prev, selectedWordIndex + 1));
-    }, [selectedWordIndex]);
+        setMaxEnabledIndex((prev) => {
+            const newMax = Math.max(prev, selectedWordIndex + 1);
+            // Save to localStorage
+            try {
+                localStorage.setItem(maxEnabledKey, newMax.toString());
+            } catch (error) {
+                console.error("Error saving max enabled index:", error);
+            }
+            return newMax;
+        });
+    }, [selectedWordIndex, maxEnabledKey]);
 
     const hdlNoteChange = (e) => {
         const { value } = e.target;
@@ -124,6 +144,25 @@ const Analysis = () => {
 
         updTarget[currentKey] = currentKey;
         setTargetProgress(updTarget);
+
+        // Save to localStorage
+        try {
+            localStorage.setItem(progressKey, JSON.stringify(updTarget));
+        } catch (error) {
+            console.error("Error saving target progress:", error);
+        }
+    };
+
+    // Function to clear cached progress (useful for testing or resetting)
+    const clearCachedProgress = () => {
+        try {
+            localStorage.removeItem(progressKey);
+            localStorage.removeItem(maxEnabledKey);
+            setTargetProgress({});
+            setMaxEnabledIndex(0);
+        } catch (error) {
+            console.error("Error clearing cached progress:", error);
+        }
     };
 
     const hdlTargetChange = (newIndex) => () => {
@@ -138,6 +177,27 @@ const Analysis = () => {
             })
         );
     };
+
+    // Get the session media URL for the full session audio player
+    const getSessionMediaUrl = () => {
+        if (sessions.item && sessions.item[0] && sessions.item[0].mediaFile) {
+            return sessions.item[0].mediaFile.mediaFile;
+        }
+        return null;
+    };
+
+    const getSessionMediaFileName = () => {
+        if (sessions.item && sessions.item[0] && sessions.item[0].mediaFile) {
+            return (
+                sessions.item[0].mediaFile.friendlyName ||
+                sessions.item[0].mediaFile.mediaFile.split("/").pop()
+            );
+        }
+        return "Audio";
+    };
+
+    const sessionMediaUrl = getSessionMediaUrl();
+    const sessionMediaFileName = getSessionMediaFileName();
 
     return (
         <Box>
@@ -172,10 +232,19 @@ const Analysis = () => {
                     >
                         <Typography>{`${t(
                             "analysisForUpload"
-                        )}: speech_analysis_1.mp3`}</Typography>
-                        <IconButton>
-                            <PlayCircleOutlineIcon />
-                        </IconButton>
+                        )}: ${sessionMediaFileName}`}</Typography>
+                        {sessionMediaUrl && (
+                            <AudioPlayer
+                                mediaUrl={sessionMediaUrl}
+                                fileName={sessionMediaFileName}
+                                playId="full-session"
+                                showFileName={false}
+                                showTime={true}
+                                showStopButton={true}
+                                size="small"
+                                color="primary"
+                            />
+                        )}
                     </Box>
                 </Box>
             </Box>
