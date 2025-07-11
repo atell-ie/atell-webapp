@@ -5,10 +5,10 @@ export default ({ children }) => {
     return (
         <Box
             sx={{
-                padding: "1rem 0",
+                padding: "0",
                 background: "#fff",
-                borderRadius: ".3rem",
-                height: 600,
+                borderRadius: "0",
+                height: 550,
                 width: "100%"
             }}
         >

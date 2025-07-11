@@ -22,6 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { format } from "date-fns";
 import JourneyDialog from "./JourneyDialog";
+import styles from "./styles";
 
 const Journeys = () => {
     const dispatch = useDispatch();
@@ -113,45 +114,19 @@ const Journeys = () => {
     };
 
     return (
-        <Container maxWidth="lg" sx={{ minHeight: "100vh" }}>
+        <Container maxWidth={false} sx={styles.container}>
             {/* Header Section */}
-            <Box
-                sx={{
-                    backgroundColor: "white",
-                    p: 3,
-                    borderRadius: "12px",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    mb: 3
-                }}
-            >
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        mb: 3
-                    }}
-                >
-                    <Box>
+            <Box sx={styles.headerBox}>
+                <Box sx={styles.headerContent}>
+                    <Box sx={styles.titleBox}>
                         <Typography
                             variant="h4"
                             component="h1"
-                            sx={{
-                                fontWeight: 600,
-                                color: "#1a1a1a",
-                                mb: 1,
-                                fontSize: "1.75rem"
-                            }}
+                            sx={styles.mainTitle}
                         >
                             Patient Journey Plans
                         </Typography>
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                color: "#666",
-                                mb: 0
-                            }}
-                        >
+                        <Typography variant="body1" sx={styles.subtitle}>
                             Manage and monitor patient speech therapy journeys
                         </Typography>
                     </Box>
@@ -159,19 +134,7 @@ const Journeys = () => {
                         variant="contained"
                         startIcon={<AddIcon />}
                         onClick={handleNewJourney}
-                        sx={{
-                            backgroundColor: "#1976d2",
-                            "&:hover": {
-                                backgroundColor: "#1565c0"
-                            },
-                            textTransform: "none",
-                            fontWeight: 600,
-                            px: 3,
-                            py: 1.5,
-                            borderRadius: "8px",
-                            fontSize: "0.95rem",
-                            boxShadow: "none"
-                        }}
+                        sx={styles.newJourneyButton}
                     >
                         New Journey Plan
                     </Button>
@@ -183,62 +146,26 @@ const Journeys = () => {
                     variant="outlined"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    sx={{
-                        mb: 2,
-                        "& .MuiOutlinedInput-root": {
-                            backgroundColor: "#f8f9fa",
-                            borderRadius: "8px",
-                            "&:hover .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "#1976d2"
-                            },
-                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "#1976d2"
-                            }
-                        }
-                    }}
+                    sx={styles.searchField}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <SearchIcon sx={{ color: "#666" }} />
+                                <SearchIcon sx={styles.searchIcon} />
                             </InputAdornment>
                         )
                     }}
                 />
 
                 {filteredJourneys.length > 0 && (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            mb: 2
-                        }}
-                    >
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: "#666",
-                                fontWeight: 500
-                            }}
-                        >
+                    <Box sx={styles.controlsBox}>
+                        <Typography variant="body2" sx={styles.journeyCount}>
                             {filteredJourneys.length} Journey Plan
                             {filteredJourneys.length !== 1 ? "s" : ""} Found
                         </Typography>
                         <Button
                             variant="outlined"
                             size="small"
-                            sx={{
-                                textTransform: "none",
-                                fontWeight: 500,
-                                borderColor: "#ddd",
-                                color: "#555",
-                                boxShadow: "none",
-                                "&:hover": {
-                                    borderColor: "#1976d2",
-                                    backgroundColor: "#f5f5f5",
-                                    boxShadow: "none"
-                                }
-                            }}
+                            sx={styles.expandAllButton}
                             onClick={handleExpandAll}
                         >
                             {globalExpanded ? "Collapse All" : "Expand All"}
@@ -258,109 +185,50 @@ const Journeys = () => {
             {filteredJourneys.length > 0 ? (
                 <Box>
                     {filteredJourneys.map((journey) => (
-                        <Box key={journey.id} sx={{ mb: 1.5 }}>
+                        <Box key={journey.id} sx={styles.journeyCardContainer}>
                             <Accordion
                                 expanded={expandedCards.has(journey.id)}
                                 onChange={() => handleCardToggle(journey.id)}
-                                sx={{
-                                    "&:before": {
-                                        display: "none"
-                                    },
-                                    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
-                                    border: "1px solid #e8e8e8",
-                                    borderRadius: "6px",
-                                    "&.Mui-expanded": {
-                                        boxShadow: "0 2px 6px rgba(0,0,0,0.12)"
-                                    },
-                                    "&:hover": {
-                                        boxShadow: "0 2px 6px rgba(0,0,0,0.12)"
-                                    }
-                                }}
+                                sx={styles.accordion}
                             >
                                 {/* Patient/Journey Header */}
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     sx={{
-                                        minHeight: "60px",
-                                        backgroundColor: "#fbfbfb",
-                                        borderBottom: expandedCards.has(
-                                            journey.id
-                                        )
-                                            ? "1px solid #e8e8e8"
-                                            : "none",
-                                        px: 2.5,
-                                        py: 1,
-                                        "& .MuiAccordionSummary-content": {
-                                            margin: "8px 0",
-                                            alignItems: "center"
-                                        },
-                                        "&.Mui-expanded": {
-                                            backgroundColor: "#f8f8f8",
-                                            borderBottom: "1px solid #e8e8e8"
-                                        }
+                                        ...styles.accordionSummary,
+                                        ...(expandedCards.has(journey.id)
+                                            ? styles.accordionSummaryExpanded
+                                            : {})
                                     }}
                                 >
-                                    <Box
-                                        sx={{
-                                            display: "grid",
-                                            gridTemplateColumns: "1fr auto",
-                                            alignItems: "center",
-                                            width: "100%",
-                                            gap: 3
-                                        }}
-                                    >
+                                    <Box sx={styles.summaryGrid}>
                                         {/* Patient and Journey Info */}
-                                        <Box>
+                                        <Box sx={styles.patientInfoBox}>
                                             <Typography
                                                 variant="h6"
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    color: "#1a1a1a",
-                                                    fontSize: "1.1rem",
-                                                    mb: 0.5
-                                                }}
+                                                sx={styles.patientName}
                                             >
                                                 {journey.client.name}
                                             </Typography>
                                             <Typography
                                                 variant="body1"
-                                                sx={{
-                                                    color: "#555",
-                                                    fontWeight: 500,
-                                                    mb: 0.5
-                                                }}
+                                                sx={styles.journeyPlanName}
                                             >
                                                 Journey Plan: {journey.name}
                                             </Typography>
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    gap: 2,
-                                                    alignItems: "center"
-                                                }}
-                                            >
+                                            <Box sx={styles.statusBox}>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#666",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        gap: 0.5
-                                                    }}
+                                                    sx={styles.sessionsInfo}
                                                 >
                                                     <Box
                                                         component="span"
                                                         sx={{
-                                                            width: 8,
-                                                            height: 8,
-                                                            borderRadius: "50%",
-                                                            backgroundColor:
-                                                                journey.sessionsCount >
-                                                                0
-                                                                    ? "#4caf50"
-                                                                    : "#ff9800",
-                                                            display:
-                                                                "inline-block"
+                                                            ...styles.statusDot,
+                                                            ...(journey.sessionsCount >
+                                                            0
+                                                                ? styles.statusDotActive
+                                                                : styles.statusDotPending)
                                                         }}
                                                     />
                                                     {journey.sessionsCount}{" "}
@@ -368,7 +236,7 @@ const Journeys = () => {
                                                 </Typography>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{ color: "#666" }}
+                                                    sx={styles.createdDate}
                                                 >
                                                     Created{" "}
                                                     {format(
@@ -382,31 +250,11 @@ const Journeys = () => {
                                         </Box>
 
                                         {/* Action Buttons */}
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: 1
-                                            }}
-                                        >
+                                        <Box sx={styles.actionsBox}>
                                             <Button
                                                 variant="contained"
                                                 size="small"
-                                                sx={{
-                                                    backgroundColor: "#1976d2",
-                                                    "&:hover": {
-                                                        backgroundColor:
-                                                            "#1565c0"
-                                                    },
-                                                    textTransform: "none",
-                                                    fontWeight: 600,
-                                                    px: 2,
-                                                    py: 1,
-                                                    borderRadius: "6px",
-                                                    fontSize: "0.875rem",
-                                                    boxShadow: "none",
-                                                    mr: 2
-                                                }}
+                                                sx={styles.viewSessionsButton}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     navigate(
@@ -419,18 +267,7 @@ const Journeys = () => {
                                             <Tooltip title="Edit Journey Plan">
                                                 <IconButton
                                                     size="small"
-                                                    sx={{
-                                                        backgroundColor:
-                                                            "#f5f5f5",
-                                                        border: "1px solid #ddd",
-                                                        boxShadow: "none",
-                                                        "&:hover": {
-                                                            backgroundColor:
-                                                                "#eeeeee",
-                                                            boxShadow: "none"
-                                                        },
-                                                        mr: 2
-                                                    }}
+                                                    sx={styles.editButton}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         handleEditJourney(
@@ -446,52 +283,20 @@ const Journeys = () => {
                                 </AccordionSummary>
 
                                 {/* Expanded Details */}
-                                <AccordionDetails
-                                    sx={{
-                                        pt: 3,
-                                        pb: 3,
-                                        backgroundColor: "white"
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            display: "grid",
-                                            gridTemplateColumns: {
-                                                xs: "1fr",
-                                                md: "1fr 1fr"
-                                            },
-                                            gap: 3
-                                        }}
-                                    >
+                                <AccordionDetails sx={styles.accordionDetails}>
+                                    <Box sx={styles.detailsGrid}>
                                         {/* Treatment Details */}
-                                        <Box>
+                                        <Box sx={styles.sectionBox}>
                                             <Typography
                                                 variant="subtitle2"
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    color: "#333",
-                                                    mb: 1.5,
-                                                    textTransform: "uppercase",
-                                                    letterSpacing: "0.5px",
-                                                    fontSize: "0.75rem"
-                                                }}
+                                                sx={styles.sectionTitle}
                                             >
                                                 Treatment Details
                                             </Typography>
-                                            <Box
-                                                sx={{
-                                                    pl: 2,
-                                                    borderLeft:
-                                                        "3px solid #e0e0e0"
-                                                }}
-                                            >
+                                            <Box sx={styles.sectionContent}>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#555",
-                                                        lineHeight: 1.6,
-                                                        mb: 1
-                                                    }}
+                                                    sx={styles.detailText}
                                                 >
                                                     <strong>
                                                         Description:
@@ -501,10 +306,7 @@ const Journeys = () => {
                                                 </Typography>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#555",
-                                                        lineHeight: 1.6
-                                                    }}
+                                                    sx={styles.detailTextLast}
                                                 >
                                                     <strong>Status:</strong>{" "}
                                                     {journey.sessionsCount > 0
@@ -515,34 +317,17 @@ const Journeys = () => {
                                         </Box>
 
                                         {/* Clinical Information */}
-                                        <Box>
+                                        <Box sx={styles.sectionBox}>
                                             <Typography
                                                 variant="subtitle2"
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    color: "#333",
-                                                    mb: 1.5,
-                                                    textTransform: "uppercase",
-                                                    letterSpacing: "0.5px",
-                                                    fontSize: "0.75rem"
-                                                }}
+                                                sx={styles.sectionTitle}
                                             >
                                                 Clinical Information
                                             </Typography>
-                                            <Box
-                                                sx={{
-                                                    pl: 2,
-                                                    borderLeft:
-                                                        "3px solid #e0e0e0"
-                                                }}
-                                            >
+                                            <Box sx={styles.sectionContent}>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#555",
-                                                        lineHeight: 1.6,
-                                                        mb: 1
-                                                    }}
+                                                    sx={styles.detailText}
                                                 >
                                                     <strong>
                                                         Total Sessions:
@@ -551,11 +336,7 @@ const Journeys = () => {
                                                 </Typography>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#555",
-                                                        lineHeight: 1.6,
-                                                        mb: 1
-                                                    }}
+                                                    sx={styles.detailText}
                                                 >
                                                     <strong>
                                                         Plan Created:
@@ -569,10 +350,7 @@ const Journeys = () => {
                                                 </Typography>
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{
-                                                        color: "#555",
-                                                        lineHeight: 1.6
-                                                    }}
+                                                    sx={styles.detailTextLast}
                                                 >
                                                     <strong>
                                                         Last Updated:
@@ -593,26 +371,11 @@ const Journeys = () => {
                     ))}
                 </Box>
             ) : (
-                <Box
-                    sx={{
-                        backgroundColor: "white",
-                        p: 4,
-                        borderRadius: "12px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                        textAlign: "center"
-                    }}
-                >
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            color: "#666",
-                            mb: 1,
-                            fontWeight: 500
-                        }}
-                    >
+                <Box sx={styles.emptyStateBox}>
+                    <Typography variant="h6" sx={styles.emptyStateTitle}>
                         No Journey Plans Found
                     </Typography>
-                    <Typography variant="body2" sx={{ color: "#888" }}>
+                    <Typography variant="body2" sx={styles.emptyStateMessage}>
                         {searchTerm
                             ? `No journey plans match your search for "${searchTerm}"`
                             : "No journey plans have been created yet"}

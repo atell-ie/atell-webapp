@@ -7,36 +7,36 @@ export default (theme) => ({
         "& div ": {
             color: `${theme.palette.primary.main} !important`,
             "& span ": {
-                color: `${theme.palette.primary.main} !important`,
-            },
-        },
+                color: `${theme.palette.primary.main} !important`
+            }
+        }
     },
     appBarToolbarSpacer: {
-        minHeight: parseInt(appToolbarMinHeight + 1),
+        minHeight: parseInt(appToolbarMinHeight + 1)
     },
     drawer: {
         flexShrink: 0,
         width: drawerWidthOpen,
-        transition: theme.transitions.create(["width"]),
+        transition: theme.transitions.create(["width"])
     },
     drawerClosed: {
-        width: `${drawerWidthClosed}px !important`,
+        width: `${drawerWidthClosed}px !important`
     },
     drawerPaper: {
         width: drawerWidthOpen,
         overflowX: "hidden",
         overflowY: "auto",
-        transition: theme.transitions.create(["width"]),
+        transition: theme.transitions.create(["width"])
     },
     listItem: {
         ...theme.mixins.toolbar,
         maxHeight: 64,
-        margin: theme.spacing(1),
+        margin: theme.spacing(1)
     },
     menuItemIcon: {
-        minWidth: "35px",
+        minWidth: "35px"
     },
     menuItemText: {
-        fontSize: "1rem",
-    },
+        fontSize: "1rem"
+    }
 });

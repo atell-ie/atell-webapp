@@ -54,29 +54,29 @@ export default function AppDialog({
 }) {
     return (
         <div>
-            <Dialog 
-                fullWidth 
+            <Dialog
+                fullWidth
                 maxWidth="lg"
-                open={open} 
+                open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    sx: {
-                        height: '90vh',
-                        maxHeight: '1000px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        minWidth: '1000px'
+                sx={{
+                    "& .MuiDialog-paper": {
+                        height: "90vh",
+                        maxHeight: "900px",
+                        display: "flex",
+                        flexDirection: "column"
                     }
                 }}
             >
                 <BootstrapDialogTitle onClose={handleClose}>
                     {title}
                 </BootstrapDialogTitle>
-                <DialogContent 
-                    sx={{ 
+                <DialogContent
+                    sx={{
                         paddingTop: "1rem !important",
                         flex: 1,
-                        overflowY: 'auto'
+                        overflowY: "auto",
+                        minHeight: 0
                     }}
                 >
                     {children}

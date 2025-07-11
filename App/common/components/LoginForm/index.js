@@ -11,7 +11,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
@@ -156,7 +156,7 @@ const LoginForm = ({ onChange, onSuccess }: Props) => {
                                 "data-testid": "user-password"
                             }}
                         />
-                        <LoadingButton
+                        <Button
                             type="submit"
                             loading={loading}
                             variant="contained"
@@ -168,7 +168,7 @@ const LoginForm = ({ onChange, onSuccess }: Props) => {
                             data-testid="login-submit"
                         >
                             {t("login")}
-                        </LoadingButton>
+                        </Button>
                         <Grid container>
                             <Grid item xs>
                                 {/* <Link href="#" variant="body2">

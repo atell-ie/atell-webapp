@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../Store/actions";
 
-import { Box, Grid, Button, Typography } from "@mui/material";
+import { Box, Grid, Button, Typography, Container } from "@mui/material";
 
 import { AudioPlayer } from "../../common/components";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -14,6 +14,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 
 import InstanceList from "./InstanceList";
+import styles from "./styles";
 
 function getUniqueTargetWordIgs(mappingsData) {
     const uniqueIds = {};
@@ -200,174 +201,164 @@ const Analysis = () => {
     const sessionMediaFileName = getSessionMediaFileName();
 
     return (
-        <Box>
-            <Box sx={{ padding: "1rem" }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        padding: "1rem",
-                        background: "#eef9fb"
-                    }}
-                >
-                    <Box sx={{ width: "100%" }}>
-                        <Button
-                            variant="outlined"
-                            onClick={() =>
-                                navigate(`/auth/results/${sessionId}/mapping`)
-                            }
-                            disableElevation
+        <Container maxWidth={false} sx={styles.container}>
+            {/* Header Section */}
+            <Box sx={styles.headerBox}>
+                <Box sx={styles.headerContent}>
+                    <Box sx={styles.titleBox}>
+                        <Typography
+                            variant="h4"
+                            component="h1"
+                            sx={styles.mainTitle}
                         >
-                            Adjust mapping
-                        </Button>
+                            Session Analysis
+                        </Typography>
+                        <Typography variant="body1" sx={styles.subtitle}>
+                            Analyze phoneme-level performance and patterns
+                        </Typography>
                     </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "100%",
-                            justifyContent: "right"
-                        }}
+                    <Button
+                        variant="outlined"
+                        onClick={() =>
+                            navigate(`/auth/results/${sessionId}/mapping`)
+                        }
+                        sx={styles.adjustMappingButton}
                     >
-                        <Typography>{`${t(
-                            "analysisForUpload"
-                        )}: ${sessionMediaFileName}`}</Typography>
-                        {sessionMediaUrl && (
-                            <AudioPlayer
-                                mediaUrl={sessionMediaUrl}
-                                fileName={sessionMediaFileName}
-                                playId="full-session"
-                                showFileName={false}
-                                showTime={true}
-                                showStopButton={true}
-                                size="small"
-                                color="primary"
-                            />
-                        )}
-                    </Box>
+                        Adjust Mapping
+                    </Button>
+                </Box>
+
+                {/* Session Audio Section */}
+                <Box sx={styles.audioSection}>
+                    <Typography sx={styles.sessionFileName}>
+                        {`${t("analysisForUpload")}: ${sessionMediaFileName}`}
+                    </Typography>
+                    {sessionMediaUrl && (
+                        <AudioPlayer
+                            mediaUrl={sessionMediaUrl}
+                            fileName={sessionMediaFileName}
+                            playId="full-session"
+                            showFileName={false}
+                            showTime={true}
+                            showStopButton={true}
+                            size="small"
+                            color="primary"
+                        />
+                    )}
                 </Box>
             </Box>
 
-            <Grid container sx={{ padding: "0 2rem" }}>
-                <Grid item xs={3}>
-                    <Typography sx={{ padding: "1rem" }}>
-                        Target words:
-                    </Typography>
-                    <List
+            {/* Main Content Area */}
+            <Box sx={styles.contentArea}>
+                <Grid container sx={{ height: "100%" }}>
+                    <Grid
+                        item
+                        xs={3}
                         sx={{
-                            height: 400,
-                            padding: "1rem",
-                            overflowY: "auto",
-                            width: "15rem"
+                            ...styles.sidebar,
+                            minWidth: "280px",
+                            maxWidth: "280px",
+                            flexShrink: 0
                         }}
                     >
-                        {Object.keys(targetWordInstances).map(
-                            (targetWordId, idx) => {
-                                const index = wordsList.byId[targetWordId];
-                                const word =
-                                    index !== undefined
-                                        ? wordsList.data[index]
-                                        : { word: "", ipa: "" };
-                                const isDisabled = idx > maxEnabledIndex;
-                                const isSelected =
-                                    selectedTargetWordId === targetWordId;
-                                const isCompleted =
-                                    !!targetProgress[targetWordId];
+                        <Typography sx={styles.sidebarTitle}>
+                            Target Words
+                        </Typography>
+                        <List sx={styles.targetWordsList}>
+                            {Object.keys(targetWordInstances).map(
+                                (targetWordId, idx) => {
+                                    const index = wordsList.byId[targetWordId];
+                                    const word =
+                                        index !== undefined
+                                            ? wordsList.data[index]
+                                            : { word: "", ipa: "" };
+                                    const isDisabled = idx > maxEnabledIndex;
+                                    const isSelected =
+                                        selectedTargetWordId === targetWordId;
+                                    const isCompleted =
+                                        !!targetProgress[targetWordId];
 
-                                return (
-                                    <ListItem
-                                        key={word.id}
-                                        onClick={
-                                            !isDisabled
-                                                ? hdlTargetChange(idx)
-                                                : undefined
-                                        }
-                                        sx={{
-                                            margin: ".5rem 0",
-                                            background: isSelected
-                                                ? "#e3f2fd"
-                                                : "#fff",
-                                            borderRadius: 2,
-                                            boxShadow: isSelected ? 3 : 1,
-                                            mb: 0.5,
-                                            px: 2,
-                                            py: 1,
-                                            minHeight: 36,
-                                            opacity: isDisabled ? 0.5 : 1,
-                                            pointerEvents: isDisabled
-                                                ? "none"
-                                                : "auto",
-                                            cursor: isDisabled
-                                                ? "not-allowed"
-                                                : "pointer",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            transition:
-                                                "box-shadow 0.2s, background 0.2s",
-                                            "&:hover": {
-                                                boxShadow:
-                                                    !isDisabled && !isSelected
-                                                        ? 4
-                                                        : undefined,
-                                                background:
-                                                    !isDisabled && !isSelected
-                                                        ? "#f5f5f5"
-                                                        : undefined
+                                    return (
+                                        <ListItem
+                                            key={word.id}
+                                            onClick={
+                                                !isDisabled
+                                                    ? hdlTargetChange(idx)
+                                                    : undefined
                                             }
-                                        }}
-                                        secondaryAction={
-                                            isCompleted && (
-                                                <CheckCircleIcon
-                                                    color={
-                                                        isSelected
-                                                            ? "primary"
-                                                            : "success"
-                                                    }
-                                                    sx={{ fontSize: 18 }}
-                                                />
-                                            )
-                                        }
-                                    >
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    variant={
-                                                        isSelected
-                                                            ? "body1"
-                                                            : "body2"
-                                                    }
-                                                    fontWeight={
-                                                        isSelected ? 700 : 400
-                                                    }
-                                                    color={
-                                                        isSelected
-                                                            ? "primary.main"
-                                                            : "text.primary"
-                                                    }
-                                                    sx={{
-                                                        fontSize: isSelected
-                                                            ? 16
-                                                            : 14
-                                                    }}
-                                                >
-                                                    {word.word}
-                                                </Typography>
+                                            sx={{
+                                                ...styles.targetWordItem,
+                                                ...(isSelected
+                                                    ? styles.targetWordItemSelected
+                                                    : styles.targetWordItemDefault),
+                                                ...(isDisabled
+                                                    ? styles.targetWordItemDisabled
+                                                    : {})
+                                            }}
+                                            secondaryAction={
+                                                isCompleted && (
+                                                    <CheckCircleIcon
+                                                        color={
+                                                            isSelected
+                                                                ? "primary"
+                                                                : "success"
+                                                        }
+                                                        sx={{ fontSize: 18 }}
+                                                    />
+                                                )
                                             }
-                                        />
-                                    </ListItem>
-                                );
-                            }
-                        )}
-                    </List>
+                                        >
+                                            <ListItemText
+                                                primary={
+                                                    <Typography
+                                                        variant={
+                                                            isSelected
+                                                                ? "body1"
+                                                                : "body2"
+                                                        }
+                                                        fontWeight={
+                                                            isSelected
+                                                                ? 700
+                                                                : 400
+                                                        }
+                                                        color={
+                                                            isSelected
+                                                                ? "primary.main"
+                                                                : "text.primary"
+                                                        }
+                                                        sx={{
+                                                            fontSize: isSelected
+                                                                ? 16
+                                                                : 14
+                                                        }}
+                                                    >
+                                                        {word.word}
+                                                    </Typography>
+                                                }
+                                            />
+                                        </ListItem>
+                                    );
+                                }
+                            )}
+                        </List>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={9}
+                        sx={{
+                            ...styles.mainContent,
+                            flex: 1,
+                            minWidth: 0,
+                            height: "100%"
+                        }}
+                    >
+                        <InstanceList
+                            setSelectedTarget={hdlSelectTargetWord}
+                            hdlTargetChange={hdlTargetChange}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={9} sx={{ flexGrow: 1 }}>
-                    <InstanceList
-                        setSelectedTarget={hdlSelectTargetWord}
-                        hdlTargetChange={hdlTargetChange}
-                    />
-                </Grid>
-            </Grid>
+            </Box>
 
             {/* <Popper
                 // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
@@ -417,7 +408,7 @@ const Analysis = () => {
             {/* <AppModal isVisible={modalOpen} onClose={hdlModalClose}>
                 some content here
             </AppModal> */}
-        </Box>
+        </Container>
     );
 };
 

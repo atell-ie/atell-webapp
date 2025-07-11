@@ -12,7 +12,6 @@ import {
     Typography,
     Divider
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 
 const JourneyDialog = ({
     open,
@@ -227,7 +226,7 @@ const JourneyDialog = ({
                 >
                     Cancel
                 </Button>
-                <LoadingButton
+                <Button
                     loading={loading}
                     onClick={handleSubmit}
                     variant="contained"
@@ -250,7 +249,7 @@ const JourneyDialog = ({
                     }}
                 >
                     {isEditMode ? "Save Changes" : "Create Journey Plan"}
-                </LoadingButton>
+                </Button>
             </DialogActions>
         </Dialog>
     );

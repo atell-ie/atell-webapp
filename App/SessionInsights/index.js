@@ -19,7 +19,8 @@ import {
     DialogActions,
     IconButton,
     Collapse,
-    CircularProgress
+    CircularProgress,
+    Container
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -27,6 +28,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SessionComparison from "./SessionComparison";
 import PhonemeSegment from "./PhonemeSegment";
 import actions from "../Store/actions";
@@ -34,6 +37,7 @@ import {
     useTargetWordInstances,
     getUniqueTargetWordIds
 } from "../common/components/InstancePhonemes";
+import styles from "./styles";
 
 const SessionInsights = () => {
     const [selectedJourney, setSelectedJourney] = useState(null);
@@ -627,183 +631,29 @@ const SessionInsights = () => {
     const progress = calculateProgress();
 
     return (
-        <Box sx={{ p: 3 }}>
-            {/* Combined Session and Summary Section */}
-            {hasSelectedSessions && comparisonData && (
-                <Paper
-                    sx={{
-                        p: 2,
-                        mb: 3,
-                        bgcolor: "#f8f9fa",
-                        border: "1px solid #e8e8e8"
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            mb: 1
-                        }}
-                    >
-                        {/* Session Comparison */}
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 2
-                            }}
-                        >
-                            <Typography variant="body1" color="text.secondary">
-                                Comparing:
-                            </Typography>
-                            <Chip
-                                label={getSessionName(selectedSessionA)}
-                                variant="outlined"
-                                sx={{
-                                    bgcolor: "white",
-                                    color: "text.primary",
-                                    borderColor: "grey.300"
-                                }}
-                            />
-                            <ArrowForwardIcon sx={{ color: "grey.500" }} />
-                            <Chip
-                                label={getSessionName(selectedSessionB)}
-                                variant="outlined"
-                                sx={{
-                                    bgcolor: "white",
-                                    color: "text.primary",
-                                    borderColor: "grey.300"
-                                }}
-                            />
-
-                            {/* Compact legend trigger */}
-                            <IconButton
-                                size="small"
-                                onClick={() =>
-                                    setLegendExpanded(!legendExpanded)
-                                }
-                                sx={{
-                                    ml: 1,
-                                    p: 0.5,
-                                    color: "text.secondary",
-                                    "&:hover": {
-                                        bgcolor: "grey.100"
-                                    }
-                                }}
-                                title="Show/hide phoneme status legend"
-                            >
-                                <HelpOutlineIcon sx={{ fontSize: 16 }} />
-                            </IconButton>
-                        </Box>
-
-                        {/* Progress Summary and Change Sessions Button */}
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 2
-                            }}
-                        >
-                            <Chip
-                                size="small"
-                                label={`+${progress?.improvedSegments || 0}`}
-                                color="success"
-                                variant="outlined"
-                                sx={{ fontSize: "0.75rem", height: 24 }}
-                            />
-                            <Chip
-                                size="small"
-                                label={`-${progress?.regressed || 0}`}
-                                color="error"
-                                variant="outlined"
-                                sx={{ fontSize: "0.75rem", height: 24 }}
-                            />
-                            <Typography
-                                variant="caption"
-                                color="text.secondary"
-                            >
-                                {progress?.improvementRate}% improvement
-                            </Typography>
-                            <Button
-                                variant="outlined"
-                                size="small"
-                                onClick={() => setModalOpen(true)}
-                                startIcon={<SettingsIcon />}
-                                sx={{
-                                    fontSize: "0.75rem",
-                                    py: 0.5,
-                                    px: 1,
-                                    height: 28
-                                }}
-                            >
-                                Change Sessions
-                            </Button>
-                        </Box>
-                    </Box>
-
-                    {/* Phoneme Status Legend (Collapsible) */}
-                    <Collapse in={legendExpanded}>
-                        <Box
-                            sx={{
-                                mt: 2,
-                                p: 2,
-                                bgcolor: "white",
-                                borderRadius: 1,
-                                border: "1px solid #e0e0e0"
-                            }}
-                        >
-                            <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                                Phoneme Status Legend:
-                            </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    gap: 2,
-                                    flexWrap: "wrap"
-                                }}
-                            >
-                                {legendItems.map((item, index) => (
-                                    <Box
-                                        key={index}
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: 0.5
-                                        }}
-                                    >
-                                        <PhonemeSegment
-                                            segment={item.segment}
-                                            status={item.status}
-                                        />
-                                        <Typography
-                                            variant="caption"
-                                            color="text.secondary"
-                                        >
-                                            {item.label}
-                                        </Typography>
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Box>
-                    </Collapse>
-                </Paper>
-            )}
-
+        <Container maxWidth={false} sx={styles.container}>
             {/* Session Configuration Modal */}
             <Dialog
                 open={modalOpen}
                 onClose={handleModalClose}
                 maxWidth="md"
                 fullWidth
+                sx={{
+                    "& .MuiDialog-paper": {
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+                    }
+                }}
             >
-                <DialogTitle>
+                <DialogTitle sx={{ pb: 1 }}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <SettingsIcon />
-                        Configure Session Comparison
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                            Configure Session Comparison
+                        </Typography>
                     </Box>
                 </DialogTitle>
-                <DialogContent sx={{ minHeight: 400 }}>
+                <DialogContent sx={{ py: 3 }}>
                     <Box sx={{ py: 2 }}>
                         {/* Journey Selection */}
                         <Box sx={{ mb: 4 }}>
@@ -862,229 +712,170 @@ const SessionInsights = () => {
 
                         {/* Session Selection */}
                         {selectedJourney && (
-                            <Box sx={{ mb: 3 }}>
+                            <Box sx={{ mb: 3, maxWidth: 500, mx: "auto" }}>
                                 <Typography
                                     variant="subtitle1"
-                                    sx={{ mb: 2, fontWeight: 600 }}
+                                    sx={{ mb: 3, fontWeight: 600 }}
                                 >
                                     2. Select Sessions to Compare
                                 </Typography>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12} md={6}>
-                                        <Box
+
+                                {/* Earlier Session */}
+                                <Box sx={{ mb: 3 }}>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            mb: 1,
+                                            fontWeight: 500,
+                                            color: "text.secondary"
+                                        }}
+                                    >
+                                        Earlier Session (A)
+                                    </Typography>
+                                    <FormControl fullWidth>
+                                        <InputLabel>
+                                            Select earlier session
+                                        </InputLabel>
+                                        <Select
+                                            value={selectedSessionA || ""}
+                                            onChange={(e) =>
+                                                handleSessionAChange(
+                                                    e.target.value
+                                                )
+                                            }
+                                            label="Select earlier session"
                                             sx={{
-                                                p: 3,
-                                                border: "2px solid",
-                                                borderColor: selectedSessionA
-                                                    ? "primary.main"
-                                                    : "grey.300",
-                                                borderRadius: 2,
-                                                bgcolor: selectedSessionA
-                                                    ? "primary.50"
-                                                    : "grey.50",
-                                                transition: "all 0.2s"
+                                                minHeight: 56,
+                                                "& .MuiSelect-select": { py: 2 }
                                             }}
                                         >
-                                            <Typography
-                                                variant="h6"
-                                                sx={{
-                                                    mb: 2,
-                                                    color: "primary.main"
-                                                }}
-                                            >
-                                                📅 Earlier Session (A)
-                                            </Typography>
-                                            <FormControl fullWidth>
-                                                <InputLabel>
-                                                    Select earlier session
-                                                </InputLabel>
-                                                <Select
-                                                    value={
-                                                        selectedSessionA || ""
-                                                    }
-                                                    onChange={(e) =>
-                                                        handleSessionAChange(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    label="Select earlier session"
-                                                    sx={{
-                                                        bgcolor: "white",
-                                                        minHeight: 56,
-                                                        "& .MuiSelect-select": {
-                                                            py: 2
-                                                        }
-                                                    }}
+                                            {journeySessions.map((session) => (
+                                                <MenuItem
+                                                    key={session.id}
+                                                    value={session.id}
+                                                    sx={{ py: 2 }}
                                                 >
-                                                    {journeySessions.map(
-                                                        (session) => (
-                                                            <MenuItem
-                                                                key={session.id}
-                                                                value={
-                                                                    session.id
-                                                                }
-                                                                sx={{ py: 2 }}
-                                                            >
-                                                                <Box
-                                                                    sx={{
-                                                                        width: "100%"
-                                                                    }}
-                                                                >
-                                                                    <Typography
-                                                                        variant="body1"
-                                                                        sx={{
-                                                                            fontWeight: 500
-                                                                        }}
-                                                                    >
-                                                                        {session.name ||
-                                                                            `Session ${session.id}`}
-                                                                    </Typography>
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        color="text.secondary"
-                                                                        sx={{
-                                                                            mt: 0.5
-                                                                        }}
-                                                                    >
-                                                                        {session.created
-                                                                            ? new Date(
-                                                                                  session.created
-                                                                              ).toLocaleDateString(
-                                                                                  "en-US",
-                                                                                  {
-                                                                                      year: "numeric",
-                                                                                      month: "long",
-                                                                                      day: "numeric"
-                                                                                  }
-                                                                              )
-                                                                            : "Date unknown"}
-                                                                    </Typography>
-                                                                </Box>
-                                                            </MenuItem>
-                                                        )
-                                                    )}
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Box
+                                                    <Box sx={{ width: "100%" }}>
+                                                        <Typography
+                                                            variant="body1"
+                                                            sx={{
+                                                                fontWeight: 500
+                                                            }}
+                                                        >
+                                                            {session.name ||
+                                                                `Session ${session.id}`}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="body2"
+                                                            color="text.secondary"
+                                                            sx={{ mt: 0.5 }}
+                                                        >
+                                                            {session.created
+                                                                ? new Date(
+                                                                      session.created
+                                                                  ).toLocaleDateString(
+                                                                      "en-US",
+                                                                      {
+                                                                          year: "numeric",
+                                                                          month: "long",
+                                                                          day: "numeric"
+                                                                      }
+                                                                  )
+                                                                : "Date unknown"}
+                                                        </Typography>
+                                                    </Box>
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+
+                                {/* Later Session */}
+                                <Box>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            mb: 1,
+                                            fontWeight: 500,
+                                            color: "text.secondary"
+                                        }}
+                                    >
+                                        Later Session (B)
+                                    </Typography>
+                                    <FormControl fullWidth>
+                                        <InputLabel>
+                                            Select later session
+                                        </InputLabel>
+                                        <Select
+                                            value={selectedSessionB || ""}
+                                            onChange={(e) =>
+                                                handleSessionBChange(
+                                                    e.target.value
+                                                )
+                                            }
+                                            label="Select later session"
                                             sx={{
-                                                p: 3,
-                                                border: "2px solid",
-                                                borderColor: selectedSessionB
-                                                    ? "secondary.main"
-                                                    : "grey.300",
-                                                borderRadius: 2,
-                                                bgcolor: selectedSessionB
-                                                    ? "secondary.50"
-                                                    : "grey.50",
-                                                transition: "all 0.2s"
+                                                minHeight: 56,
+                                                "& .MuiSelect-select": { py: 2 }
                                             }}
                                         >
-                                            <Typography
-                                                variant="h6"
-                                                sx={{
-                                                    mb: 2,
-                                                    color: "secondary.main"
-                                                }}
-                                            >
-                                                📈 Later Session (B)
-                                            </Typography>
-                                            <FormControl fullWidth>
-                                                <InputLabel>
-                                                    Select later session
-                                                </InputLabel>
-                                                <Select
-                                                    value={
-                                                        selectedSessionB || ""
-                                                    }
-                                                    onChange={(e) =>
-                                                        handleSessionBChange(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    label="Select later session"
-                                                    sx={{
-                                                        bgcolor: "white",
-                                                        minHeight: 56,
-                                                        "& .MuiSelect-select": {
-                                                            py: 2
-                                                        }
-                                                    }}
+                                            {journeySessions.map((session) => (
+                                                <MenuItem
+                                                    key={session.id}
+                                                    value={session.id}
+                                                    sx={{ py: 2 }}
                                                 >
-                                                    {journeySessions.map(
-                                                        (session) => (
-                                                            <MenuItem
-                                                                key={session.id}
-                                                                value={
-                                                                    session.id
-                                                                }
-                                                                sx={{ py: 2 }}
-                                                            >
-                                                                <Box
-                                                                    sx={{
-                                                                        width: "100%"
-                                                                    }}
-                                                                >
-                                                                    <Typography
-                                                                        variant="body1"
-                                                                        sx={{
-                                                                            fontWeight: 500
-                                                                        }}
-                                                                    >
-                                                                        {session.name ||
-                                                                            `Session ${session.id}`}
-                                                                    </Typography>
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        color="text.secondary"
-                                                                        sx={{
-                                                                            mt: 0.5
-                                                                        }}
-                                                                    >
-                                                                        {session.created
-                                                                            ? new Date(
-                                                                                  session.created
-                                                                              ).toLocaleDateString(
-                                                                                  "en-US",
-                                                                                  {
-                                                                                      year: "numeric",
-                                                                                      month: "long",
-                                                                                      day: "numeric"
-                                                                                  }
-                                                                              )
-                                                                            : "Date unknown"}
-                                                                    </Typography>
-                                                                </Box>
-                                                            </MenuItem>
-                                                        )
-                                                    )}
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
+                                                    <Box sx={{ width: "100%" }}>
+                                                        <Typography
+                                                            variant="body1"
+                                                            sx={{
+                                                                fontWeight: 500
+                                                            }}
+                                                        >
+                                                            {session.name ||
+                                                                `Session ${session.id}`}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="body2"
+                                                            color="text.secondary"
+                                                            sx={{ mt: 0.5 }}
+                                                        >
+                                                            {session.created
+                                                                ? new Date(
+                                                                      session.created
+                                                                  ).toLocaleDateString(
+                                                                      "en-US",
+                                                                      {
+                                                                          year: "numeric",
+                                                                          month: "long",
+                                                                          day: "numeric"
+                                                                      }
+                                                                  )
+                                                                : "Date unknown"}
+                                                        </Typography>
+                                                    </Box>
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
                             </Box>
                         )}
                     </Box>
 
                     {/* Status Messages */}
                     {selectedSessionA && selectedSessionB && (
-                        <Box
-                            sx={{
-                                mt: 3,
-                                p: 2,
-                                bgcolor: "success.light",
-                                borderRadius: 1
-                            }}
-                        >
+                        <Box sx={{ mt: 3, p: 2 }}>
+                            <CheckCircleIcon
+                                color="success"
+                                sx={{ mr: 1, verticalAlign: "middle" }}
+                            />
                             <Typography
                                 variant="body2"
                                 color="success.dark"
-                                align="center"
+                                sx={{ fontWeight: 500, display: "inline" }}
                             >
-                                ✓ Both sessions selected! Click "Generate
+                                Both sessions selected! Click "Generate
                                 Comparison" to analyze the progress.
                             </Typography>
                         </Box>
@@ -1094,14 +885,12 @@ const SessionInsights = () => {
                         <Box
                             sx={{
                                 mt: 3,
-                                p: 2,
-                                bgcolor: "warning.light",
-                                borderRadius: 1
+                                p: 2
                             }}
                         >
                             <Typography
                                 variant="body2"
-                                color="warning.dark"
+                                color="text.secondary"
                                 align="center"
                             >
                                 No sessions found for this journey. Please
@@ -1110,10 +899,11 @@ const SessionInsights = () => {
                         </Box>
                     )}
                 </DialogContent>
-                <DialogActions>
+                <DialogActions sx={{ px: 3, pb: 3, pt: 1, gap: 1 }}>
                     <Button
                         onClick={handleModalClose}
                         disabled={loadingAnalysis}
+                        sx={{ textTransform: "none" }}
                     >
                         Cancel
                     </Button>
@@ -1133,6 +923,11 @@ const SessionInsights = () => {
                                 <CircularProgress size={20} />
                             ) : null
                         }
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 500,
+                            px: 3
+                        }}
                     >
                         {loadingAnalysis
                             ? "Generating..."
@@ -1143,39 +938,48 @@ const SessionInsights = () => {
 
             {/* Main Content */}
             {!hasSelectedSessions && (
-                <Paper sx={{ p: 4, textAlign: "center" }}>
-                    <Typography variant="h6" gutterBottom>
-                        Session Insights
+                <Box sx={styles.emptyStateBox}>
+                    <AnalyticsIcon sx={styles.emptyStateIcon} />
+                    <Typography variant="h5" sx={styles.emptyStateTitle}>
+                        Ready to Analyze Progress
                     </Typography>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{ mb: 3 }}
-                    >
+                    <Typography variant="body1" sx={styles.emptyStateMessage}>
                         Compare phoneme-level performance between two sessions
-                        to track progress and identify improvement areas.
+                        to track progress and identify improvement areas in
+                        speech therapy.
                     </Typography>
                     <Button
                         variant="contained"
                         onClick={() => setModalOpen(true)}
                         startIcon={<SettingsIcon />}
+                        sx={styles.configureButton}
                     >
-                        Select Sessions to Compare
+                        Configure Comparison
                     </Button>
-                </Paper>
+                </Box>
             )}
 
             {hasSelectedSessions && loadingAnalysis && (
-                <Paper sx={{ p: 4, textAlign: "center" }}>
+                <Box sx={styles.loadingBox}>
                     <CircularProgress sx={{ mb: 2 }} />
-                    <Typography variant="body1">
+                    <Typography variant="body1" color="text.secondary">
                         Analyzing session data...
                     </Typography>
-                </Paper>
+                </Box>
             )}
 
             {hasSelectedSessions && !loadingAnalysis && comparisonData && (
-                <SessionComparison data={comparisonData} />
+                <SessionComparison
+                    data={comparisonData}
+                    progress={progress}
+                    getSessionName={getSessionName}
+                    selectedSessionA={selectedSessionA}
+                    selectedSessionB={selectedSessionB}
+                    onConfigureClick={() => setModalOpen(true)}
+                    legendExpanded={legendExpanded}
+                    onLegendToggle={() => setLegendExpanded(!legendExpanded)}
+                    legendItems={legendItems}
+                />
             )}
 
             {hasSelectedSessions && !loadingAnalysis && !comparisonData && (
@@ -1193,7 +997,7 @@ const SessionInsights = () => {
                     </Button>
                 </Paper>
             )}
-        </Box>
+        </Container>
     );
 };
 

@@ -56,18 +56,32 @@ const useColumns = () => {
         {
             field: "actions",
             headerName: "Actions",
-            minWidth: 140,
+            minWidth: 180,
+            width: 180,
             align: "right",
             headerAlign: "right",
             renderCell: (params) => {
                 return (
                     <Button
-                        variant="text"
+                        variant="contained"
                         size="small"
                         startIcon={<AnalyticsIcon />}
                         onClick={() =>
                             navigate(`/auth/results/${params.row.id}/mapping`)
                         }
+                        sx={{
+                            backgroundColor: "#1976d2",
+                            "&:hover": {
+                                backgroundColor: "#1565c0"
+                            },
+                            textTransform: "none",
+                            fontWeight: 500,
+                            px: 2,
+                            py: 0.5,
+                            borderRadius: "6px",
+                            fontSize: "0.875rem",
+                            minWidth: "auto"
+                        }}
                     >
                         View Analysis
                     </Button>

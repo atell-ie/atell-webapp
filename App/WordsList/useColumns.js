@@ -6,7 +6,7 @@ const useColumns = (hdlModalOpen) => {
         {
             field: "name",
             headerName: "Name",
-            minWidth: 250,
+            minWidth: 300,
             flex: 1
         },
         {
@@ -15,7 +15,7 @@ const useColumns = (hdlModalOpen) => {
             type: "number",
             align: "center",
             headerAlign: "center",
-            minWidth: 100,
+            width: 120,
             renderCell: (params) => {
                 const count = Array.isArray(params.row.words)
                     ? params.row.words.length
@@ -26,16 +26,24 @@ const useColumns = (hdlModalOpen) => {
         {
             field: "action",
             headerName: "Action",
-            type: "number",
             align: "center",
             headerAlign: "center",
-            minWidth: 100,
+            width: 150,
             sortable: false,
+            disableColumnMenu: true,
             renderCell: (params) => {
                 return (
                     <Button
                         variant="text"
                         onClick={hdlModalOpen(params.row.id)}
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 500,
+                            color: "#1976d2",
+                            "&:hover": {
+                                backgroundColor: "rgba(25, 118, 210, 0.04)"
+                            }
+                        }}
                     >
                         Edit list
                     </Button>

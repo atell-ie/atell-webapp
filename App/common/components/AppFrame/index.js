@@ -16,7 +16,6 @@ import { DrawerHeader } from "../NavigationMenu";
 
 import NavigationMenu from "../NavigationMenu";
 //import Logo from "../../common/images/logo-light.png";
-import styles from "../../../User/UserMenu/old_menuStyles";
 import menuUtils from "../../../User/UserMenu/menuUtils";
 import mainMenu from "../../../User/UserMenu/mainMenu";
 

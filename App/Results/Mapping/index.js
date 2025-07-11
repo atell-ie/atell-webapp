@@ -24,8 +24,6 @@ const Mapping = () => {
 
     const { results } = useSelector((state) => state);
 
-    console.log("results.data", results.data);
-
     // Generate speaker colors for legend (matching the colors in useColumns)
     const speakerLegendColors = useMemo(() => {
         const speakers = [

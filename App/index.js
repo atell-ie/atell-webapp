@@ -5,7 +5,7 @@ import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // <-- USE DAYJS
 import { BrowserRouter } from "react-router-dom";
-import { theme } from "./common/styles";
+import { theme } from "./common/theme";
 import MainRoutes from "./MainRoutes";
 import Store from "./Store";
 import { OnlineStatusProvider } from "./OnlineStatusProvider";

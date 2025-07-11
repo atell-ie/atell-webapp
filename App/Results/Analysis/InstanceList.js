@@ -165,19 +165,26 @@ const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
     const sessionMediaFileName = getSessionMediaFileName();
 
     return (
-        <Box sx={{ padding: "0 0 0 3rem", height: "100%" }}>
+        <Box sx={{ height: "100%", width: "100%" }}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "baseline",
-                    padding: "1rem 0"
+                    alignItems: "center",
+                    padding: "1rem 0",
+                    width: "100%"
                 }}
             >
-                <Box>
+                <Box sx={{ minWidth: 0, flex: 1 }}>
                     <Typography
                         variant="h6"
-                        sx={{ mb: 2, color: "text.secondary" }}
+                        sx={{
+                            mb: 0,
+                            color: "text.secondary",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis"
+                        }}
                     >
                         Found instances: <b>{targetName}</b>
                     </Typography>
@@ -185,26 +192,58 @@ const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
                 <Box
                     sx={{
                         display: "flex",
-                        justifyContent: "end"
+                        gap: 2,
+                        flexShrink: 0
                     }}
                 >
                     <Button
                         variant="outlined"
-                        sx={{ marginRight: "1rem" }}
                         onClick={hdlTargetChange(selectedWordIndex - 1)}
                         disabled={!selectedWordIndex}
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 500,
+                            px: 2,
+                            py: 1,
+                            borderRadius: "8px",
+                            fontSize: "0.875rem"
+                        }}
                     >
                         Previous
                     </Button>
 
-                    <Button variant="contained" onClick={handleContinue}>
+                    <Button
+                        variant="contained"
+                        onClick={handleContinue}
+                        sx={{
+                            backgroundColor: "#1976d2",
+                            "&:hover": {
+                                backgroundColor: "#1565c0"
+                            },
+                            textTransform: "none",
+                            fontWeight: 600,
+                            px: 3,
+                            py: 1,
+                            borderRadius: "8px",
+                            fontSize: "0.875rem",
+                            boxShadow: "none"
+                        }}
+                    >
                         {isLastTarget ? "Finish" : "Continue"}
                     </Button>
                 </Box>
             </Box>
             <Divider sx={{ marginBottom: "1.5rem" }} />
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    minHeight: "400px", // Prevent layout shift
+                    width: "100%"
+                }}
+            >
                 {wordInstances.map((instance, instanceIndex) => {
                     return (
                         <Box

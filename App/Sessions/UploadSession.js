@@ -15,7 +15,7 @@ import {
     IconButton,
     MenuItem
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import AudioFileIcon from "@mui/icons-material/AudioFile";
 import CloseIcon from "@mui/icons-material/Close";
@@ -182,7 +182,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                 >
                     {t("cancel")}
                 </Button>
-                <LoadingButton
+                <Button
                     loading={loading}
                     variant="contained"
                     onClick={handleUpload}
@@ -195,7 +195,7 @@ const UploadSession = ({ modalOpen, setModalOpen, hdlClose }) => {
                     }}
                 >
                     {t("confirm")}
-                </LoadingButton>
+                </Button>
             </>
         );
     };
