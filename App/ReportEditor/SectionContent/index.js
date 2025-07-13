@@ -2,16 +2,17 @@ import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import actions from "../../Store/actions";
-import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Box, Typography } from "@mui/material";
 
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AddIcon from "@mui/icons-material/Add";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
+import ListIcon from "@mui/icons-material/List";
+import TableChartIcon from "@mui/icons-material/TableChart";
 
 import Title from "./Title";
 import Paragraph from "./Paragraph";
 import List from "./List";
 import Table from "./Table";
-
-import styles from "./styles";
 
 const SectionContent = ({ section }) => {
     const dispatch = useDispatch();
@@ -64,7 +65,6 @@ const SectionContent = ({ section }) => {
         }
 
         updateSection(newData);
-
         hdlMenuClose();
     };
 
@@ -121,38 +121,98 @@ const SectionContent = ({ section }) => {
     }, [reportTemplates.item, reports.item]);
 
     return (
-        <Grid container>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
             {content}
-            <Grid item xs={12} sx={styles.moreOptions}>
+
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
                 <IconButton
-                    color="primary"
-                    aria-label="options"
-                    size="medium"
                     onClick={hdlMenuOpen}
+                    sx={{
+                        backgroundColor: "#1976d2",
+                        color: "white",
+                        borderRadius: "12px",
+                        width: 48,
+                        height: 48,
+                        "&:hover": {
+                            backgroundColor: "#1565c0"
+                        },
+                        boxShadow: "0 2px 8px rgba(25, 118, 210, 0.3)"
+                    }}
                 >
-                    <MoreHorizIcon />
+                    <AddIcon />
                 </IconButton>
                 <Menu
-                    id="basic-menu"
+                    id="content-menu"
                     anchorEl={anchorEl}
                     open={isMenuOpen}
                     onClose={hdlMenuClose}
                     MenuListProps={{
-                        "aria-labelledby": "basic-button"
+                        "aria-labelledby": "content-button"
+                    }}
+                    PaperProps={{
+                        style: {
+                            borderRadius: "12px",
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                            minWidth: 200
+                        }
+                    }}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center"
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center"
                     }}
                 >
-                    <MenuItem onClick={hdlMenuSelection("paragraph")}>
-                        Paragraph
+                    <MenuItem
+                        onClick={hdlMenuSelection("paragraph")}
+                        sx={{
+                            py: 1.5,
+                            px: 2,
+                            "&:hover": {
+                                backgroundColor: "#f0f7ff"
+                            }
+                        }}
+                    >
+                        <TextFieldsIcon sx={{ mr: 2, color: "#1976d2" }} />
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                            Paragraph
+                        </Typography>
                     </MenuItem>
-                    <MenuItem onClick={hdlMenuSelection("list")}>
-                        Bullets list
+                    <MenuItem
+                        onClick={hdlMenuSelection("list")}
+                        sx={{
+                            py: 1.5,
+                            px: 2,
+                            "&:hover": {
+                                backgroundColor: "#f0f7ff"
+                            }
+                        }}
+                    >
+                        <ListIcon sx={{ mr: 2, color: "#1976d2" }} />
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                            Bullets list
+                        </Typography>
                     </MenuItem>
-                    <MenuItem onClick={hdlMenuSelection("table")}>
-                        Table
+                    <MenuItem
+                        onClick={hdlMenuSelection("table")}
+                        sx={{
+                            py: 1.5,
+                            px: 2,
+                            "&:hover": {
+                                backgroundColor: "#f0f7ff"
+                            }
+                        }}
+                    >
+                        <TableChartIcon sx={{ mr: 2, color: "#1976d2" }} />
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                            Table
+                        </Typography>
                     </MenuItem>
                 </Menu>
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     );
 };
 

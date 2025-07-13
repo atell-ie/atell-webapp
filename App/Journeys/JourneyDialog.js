@@ -60,7 +60,13 @@ const JourneyDialog = ({
     };
 
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            maxWidth="sm"
+            fullWidth
+            elevation={8}
+        >
             <DialogTitle
                 sx={{
                     px: 3,

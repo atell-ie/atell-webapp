@@ -66,7 +66,11 @@ export default ({ children }: Props) => {
 
     return (
         <>
-            <Dialog onClose={onLoginDialogClose} open={loginDialogOpen}>
+            <Dialog
+                onClose={onLoginDialogClose}
+                open={loginDialogOpen}
+                elevation={8}
+            >
                 <DialogContent>
                     <DialogContentText>
                         {t("messages.enterCredentials")}

@@ -1,4 +1,4 @@
-import { all, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import { actionCreators, actionTypes } from "./actions";
 import { http } from "../../common/lib";
 import config from "../../config";
@@ -118,81 +118,91 @@ const reportData = {
     ]
 };
 
-function* getRequest(action) {
+function* getReports(action) {
     // const {  } = action.payload;
-    try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+    const url = `${config.api.baseUrl}${config.api.urls.reports}`;
 
-        yield put(actionCreators.getRequestSuccess(reportsData));
+    try {
+        const { data } = yield call(http.authorized.get, url);
+
+        yield put(actionCreators.getReportsSuccess(data));
     } catch (error) {
-        yield put(actionCreators.getRequestFailure(error.toString()));
+        yield put(actionCreators.getReportsFailure(error.toString()));
     }
 }
 
-function* getReportRequest(action) {
-    const { taskId } = action.payload;
+function* postReport(action) {
+    const { report } = action.payload;
+    const url = `${config.api.baseUrl}${config.api.urls.reports}/`;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const { data } = yield call(http.authorized.post, url, report);
 
-        yield put(actionCreators.getReportRequestSuccess(reportData));
-    } catch (error) {
-        yield put(actionCreators.getReportRequestFailure(error.toString()));
-    }
-}
-
-function* postReportRequest(action) {
-    const { reportData } = action.payload;
-    try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
-
-        const newReport = {
-            id: 40,
-            clientId: 1,
-            source: 2
-        };
-
-        yield put(actionCreators.postReportSuccess(newReport));
+        yield put(actionCreators.postReportSuccess(data));
     } catch (error) {
         yield put(actionCreators.postReportFailure(error.toString()));
     }
 }
 
-function* putReportRequest(action) {
-    const { reportId, newReport } = action.payload;
-    try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+function* getReportData(action) {
+    const { reportId } = action.payload;
 
-        yield put(actionCreators.putReportSuccess(newReport));
+    const url = `${config.api.baseUrl}${config.api.urls.reports}/${reportId}/report-data/`;
+    try {
+        const { data } = yield call(http.authorized.get, url);
+
+        yield put(actionCreators.getReportDataSuccess(data));
     } catch (error) {
-        yield put(actionCreators.putReportFailure(error.toString()));
+        yield put(actionCreators.getReportDataFailure(error.toString()));
     }
 }
 
-function* deleteReportRequest(action) {
-    const { taskId } = action.payload;
-    try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+function* postReportData(action) {
+    const { reportId, reportData } = action.payload;
 
-        yield put(actionCreators.deleteReportSuccess(reportData));
+    const url = `${config.api.baseUrl}${config.api.urls.reports}/${reportId}/report-data/`;
+    try {
+        const { data } = yield call(http.authorized.post, url, reportData);
+
+        yield put(actionCreators.postReportDataSuccess(data));
+    } catch (error) {
+        yield put(actionCreators.postReportDataFailure(error.toString()));
+    }
+}
+
+function* putReportData(action) {
+    const { reportId, reportData } = action.payload;
+    const url = `${config.api.baseUrl}${config.api.urls.reports}/${reportId}/report-data/`;
+    try {
+        const { data } = yield call(http.authorized.put, url, {
+            report_data: reportData
+        });
+
+        yield put(actionCreators.putReportDataSuccess(data));
+    } catch (error) {
+        yield put(actionCreators.putReportDataFailure(error.toString()));
+    }
+}
+
+function* deleteReport(action) {
+    const { reportId } = action.payload;
+
+    const url = `${config.api.baseUrl}${config.api.urls.reports}/${reportId}/`;
+    try {
+        const { data } = yield call(http.authorized.delete, url);
+
+        yield put(actionCreators.deleteReportSuccess(reportId));
     } catch (error) {
         yield put(actionCreators.deleteReportFailure(error.toString()));
     }
 }
 
-export {
-    getRequest,
-    getReportRequest,
-    postReportRequest,
-    putReportRequest,
-    deleteReportRequest
-};
-
 export default (function* () {
     yield all([
-        takeLatest(actionTypes.REPORTS_REQUEST, getRequest),
-        takeLatest(actionTypes.REPORT_REQUEST, getReportRequest),
-        takeLatest(actionTypes.POST_REPORT_REQUEST, postReportRequest),
-        takeLatest(actionTypes.PUT_REPORT_REQUEST, putReportRequest),
-        takeLatest(actionTypes.DELETE_REPORT_REQUEST, deleteReportRequest)
+        takeLatest(actionTypes.GET_REPORTS, getReports),
+        takeLatest(actionTypes.POST_REPORT, postReport),
+        takeLatest(actionTypes.GET_REPORT_DATA, getReportData),
+        takeLatest(actionTypes.POST_REPORT_DATA, postReportData),
+        takeLatest(actionTypes.PUT_REPORT_DATA, putReportData),
+        takeLatest(actionTypes.DELETE_REPORT, deleteReport)
     ]);
 })();

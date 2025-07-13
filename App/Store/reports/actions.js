@@ -5,23 +5,27 @@ export const actionTypes = {
     REPORT_ITEM_SET: "REPORT_ITEM_SET",
     REPORT_ITEM_UPDATE: "REPORT_ITEM_UPDATE",
 
-    REPORTS_REQUEST: "REPORTS_REQUEST",
-    REPORTS_REQUEST_SUCCESS: "REPORTS_REQUEST_SUCCESS",
-    REPORTS_REQUEST_FAILURE: "REPORTS_REQUEST_FAILURE",
+    GET_REPORTS: "GET_REPORTS",
+    GET_REPORTS_SUCCESS: "GET_REPORTS_SUCCESS",
+    GET_REPORTS_FAILURE: "GET_REPORTS_FAILURE",
 
-    REPORT_REQUEST: "REPORT_REQUEST",
-    REPORT_REQUEST_SUCCESS: "REPORT_REQUEST_SUCCESS",
-    REPORT_REQUEST_FAILURE: "REPORT_REQUEST_FAILURE",
-
-    POST_REPORT_REQUEST: "POST_REPORT_REQUEST",
+    POST_REPORT: "POST_REPORT",
     POST_REPORT_SUCCESS: "POST_REPORT_SUCCESS",
     POST_REPORT_FAILURE: "POST_REPORT_FAILURE",
 
-    PUT_REPORT_REQUEST: "PUT_REPORT_REQUEST",
-    PUT_REPORT_SUCCESS: "PUT_REPORT_SUCCESS",
-    PUT_REPORT_FAILURE: "PUT_REPORT_FAILURE",
+    GET_REPORT_DATA: "GET_REPORT_DATA",
+    GET_REPORT_DATA_SUCCESS: "GET_REPORT_DATA_SUCCESS",
+    GET_REPORT_DATA_FAILURE: "GET_REPORT_DATA_FAILURE",
 
-    DELETE_REPORT_REQUEST: "DELETE_REPORT_REQUEST",
+    POST_REPORT_DATA: "POST_REPORT_DATA",
+    POST_REPORT_DATA_SUCCESS: "POST_REPORT_DATA_SUCCESS",
+    POST_REPORT_DATA_FAILURE: "POST_REPORT_DATA_FAILURE",
+
+    PUT_REPORT_DATA: "PUT_REPORT_DATA",
+    PUT_REPORT_DATA_SUCCESS: "PUT_REPORT_DATA_SUCCESS",
+    PUT_REPORT_DATA_FAILURE: "PUT_REPORT_DATA_FAILURE",
+
+    DELETE_REPORT: "DELETE_REPORT",
     DELETE_REPORT_SUCCESS: "DELETE_REPORT_SUCCESS",
     DELETE_REPORT_FAILURE: "DELETE_REPORT_FAILURE"
 };
@@ -42,45 +46,29 @@ export const actionCreators = {
         saveReduxState: true
     }),
 
-    getRequest: () => ({
-        type: actionTypes.REPORTS_REQUEST,
+    getReports: () => ({
+        type: actionTypes.GET_REPORTS,
         payload: {},
-        [WAIT_FOR_ACTION]: actionTypes.REPORTS_REQUEST_SUCCESS,
-        [ERROR_ACTION]: actionTypes.REPORTS_REQUEST_FAILURE
+        [WAIT_FOR_ACTION]: actionTypes.GET_REPORTS_SUCCESS,
+        [ERROR_ACTION]: actionTypes.GET_REPORTS_FAILURE
     }),
-    getRequestSuccess: (reports: Array<any>) => ({
-        type: actionTypes.REPORTS_REQUEST_SUCCESS,
+    getReportsSuccess: (reports: Array<any>) => ({
+        type: actionTypes.GET_REPORTS_SUCCESS,
         payload: { reports },
         saveReduxState: true
     }),
-    getRequestFailure: (error) => ({
-        type: actionTypes.REPORTS_REQUEST_FAILURE,
+    getReportsFailure: (error) => ({
+        type: actionTypes.GET_REPORTS_FAILURE,
         error
     }),
 
-    getReportRequest: (reportId) => ({
-        type: actionTypes.REPORT_REQUEST,
-        payload: { reportId },
-        [WAIT_FOR_ACTION]: actionTypes.REPORT_REQUEST_SUCCESS,
-        [ERROR_ACTION]: actionTypes.REPORT_REQUEST_FAILURE
-    }),
-    getReportRequestSuccess: (report: any) => ({
-        type: actionTypes.REPORT_REQUEST_SUCCESS,
+    postReport: (report) => ({
+        type: actionTypes.POST_REPORT,
         payload: { report },
-        saveReduxState: true
-    }),
-    getReportRequestFailure: (error) => ({
-        type: actionTypes.REPORT_REQUEST_FAILURE,
-        error
-    }),
-
-    postReportRequest: (reportData) => ({
-        type: actionTypes.POST_REPORT_REQUEST,
-        payload: { reportData },
         [WAIT_FOR_ACTION]: actionTypes.POST_REPORT_SUCCESS,
         [ERROR_ACTION]: actionTypes.POST_REPORT_FAILURE
     }),
-    postReportSuccess: (report: any) => ({
+    postReportSuccess: (report) => ({
         type: actionTypes.POST_REPORT_SUCCESS,
         payload: { report },
         saveReduxState: true
@@ -90,31 +78,64 @@ export const actionCreators = {
         error
     }),
 
-    putReportRequest: (reportId, newReport) => ({
-        type: actionTypes.PUT_REPORT_REQUEST,
-        payload: { reportId, newReport },
-        [WAIT_FOR_ACTION]: actionTypes.PUT_REPORT_SUCCESS,
-        [ERROR_ACTION]: actionTypes.PUT_REPORT_FAILURE
+    getReportData: (reportId) => ({
+        type: actionTypes.GET_REPORT_DATA,
+        payload: { reportId },
+        [WAIT_FOR_ACTION]: actionTypes.GET_REPORT_DATA_SUCCESS,
+        [ERROR_ACTION]: actionTypes.GET_REPORT_DATA_FAILURE
     }),
-    putReportSuccess: (report: any) => ({
-        type: actionTypes.PUT_REPORT_SUCCESS,
+    getReportDataSuccess: (report: any) => ({
+        type: actionTypes.GET_REPORT_DATA_SUCCESS,
         payload: { report },
         saveReduxState: true
     }),
-    putReportFailure: (error) => ({
-        type: actionTypes.PUT_REPORT_FAILURE,
+    getReportDataFailure: (error) => ({
+        type: actionTypes.GET_REPORT_DATA_FAILURE,
         error
     }),
 
-    deleteReportRequest: (reportId) => ({
-        type: actionTypes.DELETE_REPORT_REQUEST,
+    postReportData: (reportId, reportData) => ({
+        type: actionTypes.POST_REPORT_DATA,
+        payload: { reportId, reportData },
+        [WAIT_FOR_ACTION]: actionTypes.POST_REPORT_DATA_SUCCESS,
+        [ERROR_ACTION]: actionTypes.POST_REPORT_DATA_FAILURE
+    }),
+    postReportDataSuccess: (report: any) => ({
+        type: actionTypes.POST_REPORT_DATA_SUCCESS,
+        payload: { report },
+        saveReduxState: true
+    }),
+    postReportDataFailure: (error) => ({
+        type: actionTypes.POST_REPORT_DATA_FAILURE,
+        error
+    }),
+
+    putReportData: (reportId, reportData) => ({
+        type: actionTypes.PUT_REPORT_DATA,
+        payload: { reportId, reportData },
+        [WAIT_FOR_ACTION]: actionTypes.PUT_REPORT_DATA_SUCCESS,
+        [ERROR_ACTION]: actionTypes.PUT_REPORT_DATA_FAILURE
+    }),
+    putReportDataSuccess: (report: any) => ({
+        type: actionTypes.PUT_REPORT_DATA_SUCCESS,
+        payload: { report },
+        saveReduxState: true
+    }),
+    putReportDataFailure: (error) => ({
+        type: actionTypes.PUT_REPORT_DATA_FAILURE,
+        error
+    }),
+
+    // Delete report data
+    deleteReport: (reportId) => ({
+        type: actionTypes.DELETE_REPORT,
         payload: { reportId },
         [WAIT_FOR_ACTION]: actionTypes.DELETE_REPORT_SUCCESS,
         [ERROR_ACTION]: actionTypes.DELETE_REPORT_FAILURE
     }),
-    deleteReportSuccess: (report: any) => ({
+    deleteReportSuccess: (reportId: any) => ({
         type: actionTypes.DELETE_REPORT_SUCCESS,
-        payload: { report },
+        payload: { reportId },
         saveReduxState: true
     }),
     deleteReportFailure: (error) => ({

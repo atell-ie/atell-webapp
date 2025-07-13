@@ -27,6 +27,7 @@ import { AudioPlayer } from "../../common/components";
 import InstancePhoneme from "./InstancePhoneme";
 import Results from "./Results";
 import AppModal from "../../common/components/AppModal";
+import AnalysisSummaryModal from "./AnalysisSummaryModal";
 
 const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
     const [wordInstances, setWordInstances] = useState([]);
     const [editingInstanceId, setEditingInstanceId] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
+    const [summaryModalOpen, setSummaryModalOpen] = useState(false);
 
     const { results, resultsManager, wordsList, sessions } = useSelector(
         (state) => state
@@ -140,7 +142,15 @@ const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
         selectedWordIndex === Object.keys(targetWordInstances).length - 1;
 
     const handleContinue = () => {
-        hdlTargetChange(selectedWordIndex + 1)();
+        if (isLastTarget) {
+            setSummaryModalOpen(true);
+        } else {
+            hdlTargetChange(selectedWordIndex + 1)();
+        }
+    };
+
+    const handleSummaryModalClose = () => {
+        setSummaryModalOpen(false);
     };
 
     // Get the session media URL for the audio player
@@ -629,6 +639,11 @@ const InstanceList = ({ setSelectedTarget, hdlTargetChange }) => {
                     <Results />
                 )}
             </AppModal>
+
+            <AnalysisSummaryModal
+                open={summaryModalOpen}
+                onClose={handleSummaryModalClose}
+            />
         </Box>
     );
 };

@@ -20,14 +20,15 @@ export default function (state = initialState, action) {
             newItem[section] = data;
             return { ...state, item: newItem };
         }
-        case actionTypes.TEMPLATES_REQUEST_SUCCESS: {
+        case actionTypes.GET_TEMPLATES_SUCCESS: {
             const { templates } = action.payload;
+            console.log("templates", templates);
             return list.getReducer(state, templates);
         }
 
-        case actionTypes.TEMPLATE_REQUEST_SUCCESS: {
+        case actionTypes.GET_TEMPLATE_CONTENT_SUCCESS: {
             const { template } = action.payload;
-            return { ...state, item: template };
+            return { ...state, item: template.content };
         }
 
         case actionTypes.POST_TEMPLATE_SUCCESS: {
@@ -42,9 +43,9 @@ export default function (state = initialState, action) {
             return list.getReducer(state, templates);
         }
 
-        case actionTypes.PUT_TEMPLATE_SUCCESS: {
+        case actionTypes.PUT_TEMPLATE_CONTENT_SUCCESS: {
             const { template } = action.payload;
-            return { ...state, item: template };
+            return { ...state, item: template.content };
         }
 
         case actionTypes.DELETE_TEMPLATE_SUCCESS: {

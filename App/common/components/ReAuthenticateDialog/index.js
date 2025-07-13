@@ -60,7 +60,7 @@ export default () => {
     };
 
     return (
-        <Dialog open={dialogOpen} onClose={onDialogClose}>
+        <Dialog open={dialogOpen} onClose={onDialogClose} elevation={8}>
             <DialogTitle>{t("messages.sessionExpired")}</DialogTitle>
             <DialogContent>
                 <Box sx={{ p: 2 }}>

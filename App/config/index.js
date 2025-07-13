@@ -22,6 +22,8 @@ const config = () => {
                 targetWordsList: "v1/target-words-list",
                 targetList: "/target-list/",
                 auditSubmissions: "/v1/audit-submissions/",
+                reports: "/v1/reports",
+                templates: "/v1/templates",
                 me: "/v1/me/",
                 wordIpas: "/word-ipa",
                 typesList: "/types-list/",

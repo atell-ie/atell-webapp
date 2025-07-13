@@ -20,17 +20,22 @@ export default function (state = initialState, action) {
             newItem[section] = data;
             return { ...state, item: newItem };
         }
-        case actionTypes.REPORTS_REQUEST_SUCCESS: {
+        case actionTypes.GET_REPORTS_SUCCESS: {
             const { reports } = action.payload;
             return list.getReducer(state, reports);
         }
 
-        case actionTypes.REPORT_REQUEST_SUCCESS: {
+        case actionTypes.POST_REPORT_SUCCESS: {
             const { report } = action.payload;
-            return { ...state, item: report };
+            return list.getReducer(state, report);
         }
 
-        case actionTypes.POST_REPORT_SUCCESS: {
+        case actionTypes.GET_REPORT_DATA_SUCCESS: {
+            const { report } = action.payload;
+            return { ...state, item: report.reportData };
+        }
+
+        case actionTypes.POST_REPORT_DATA_SUCCESS: {
             const { report } = action.payload;
 
             const reports = [...state.data];
@@ -42,10 +47,19 @@ export default function (state = initialState, action) {
             return list.getReducer(state, reports);
         }
 
-        case actionTypes.PUT_REPORT_SUCCESS: {
+        case actionTypes.PUT_REPORT_DATA_SUCCESS: {
             const { report } = action.payload;
-            return { ...state, item: report };
+            // Handle both possible field names from API
+            const reportData = report.reportData;
+            return { ...state, item: reportData };
         }
+
+        case actionTypes.DELETE_REPORT_SUCCESS: {
+            const { reportId } = action.payload;
+            const reports = state.data.filter((item) => item.id !== reportId);
+            return { ...state, data: reports };
+        }
+
         default: {
             return state;
         }

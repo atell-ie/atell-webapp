@@ -170,12 +170,12 @@ const LoginForm = ({ onChange, onSuccess }: Props) => {
                             {t("login")}
                         </Button>
                         <Grid container>
-                            <Grid item xs>
+                            <Grid size="grow">
                                 {/* <Link href="#" variant="body2">
                                     {t("needHelp")}
                                 </Link> */}
                             </Grid>
-                            <Grid item>
+                            <Grid>
                                 <Link
                                     onClick={onForgotPasswordClick}
                                     variant="body2"

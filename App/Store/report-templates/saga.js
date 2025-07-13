@@ -1,4 +1,4 @@
-import { all, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import { actionCreators, actionTypes } from "./actions";
 import { http } from "../../common/lib";
 import config from "../../config";
@@ -114,80 +114,74 @@ const reportData = {
     ]
 };
 
-function* getRequest(action) {
+function* getTemplates(action) {
     // const {  } = action.payload;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const url = `${config.api.baseUrl}${config.api.urls.templates}`;
+        const { data } = yield call(http.authorized.get, url);
 
-        yield put(actionCreators.getRequestSuccess(availableTemplates));
+        yield put(actionCreators.getTemplatesSuccess(data));
     } catch (error) {
-        yield put(actionCreators.getRequestFailure(error.toString()));
+        yield put(actionCreators.getTemplatesFailure(error.toString()));
     }
 }
 
-function* getTemplateRequest(action) {
+function* getTemplateContent(action) {
     const { templateId } = action.payload;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const url = `${config.api.baseUrl}${config.api.urls.templates}/${templateId}/content/`;
+        const { data } = yield call(http.authorized.get, url);
 
-        yield put(actionCreators.getTemplateSuccess(reportData));
+        yield put(actionCreators.getTemplateContentSuccess(data));
     } catch (error) {
-        yield put(actionCreators.getTemplateFailure(error.toString()));
+        yield put(actionCreators.getTemplateContentFailure(error.toString()));
     }
 }
 
-function* postTemplateRequest(action) {
-    const { templateData } = action.payload;
+function* postTemplate(action) {
+    const { template } = action.payload;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const url = `${config.api.baseUrl}${config.api.urls.templates}/`;
+        const { data } = yield call(http.authorized.post, url, template);
 
-        const newTemplate = {
-            id: 99,
-            name: templateData.name
-        };
-
-        yield put(actionCreators.postTemplateSuccess(newTemplate));
+        yield put(actionCreators.postTemplateSuccess(data));
     } catch (error) {
-        yield put(actionCreators.postTemplateFailure(error.toString()));
+        yield put(actionCreators.postTemplateFailure(error));
     }
 }
 
-function* putTemplateRequest(action) {
-    const { templateId, newTemplate } = action.payload;
+function* putTemplateContent(action) {
+    const { templateId, template } = action.payload;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const url = `${config.api.baseUrl}${config.api.urls.templates}/${templateId}/content/`;
+        const { data } = yield call(http.authorized.put, url, {
+            content: template
+        });
 
-        yield put(actionCreators.putTemplateSuccess(newTemplate));
+        yield put(actionCreators.putTemplateContentSuccess(data));
     } catch (error) {
-        yield put(actionCreators.putTemplateFailure(error.toString()));
+        yield put(actionCreators.putTemplateContentFailure(error));
     }
 }
 
-function* deleteTemplateRequest(action) {
+function* deleteTemplate(action) {
     const { templateId } = action.payload;
     try {
-        //const { data } = yield call(http.authorized.get, config.api.paths.tasks);
+        const url = `${config.api.baseUrl}${config.api.urls.templates}/${templateId}/content`;
+        const { data } = yield call(http.authorized.delete, url);
 
         yield put(actionCreators.deleteTemplateSuccess(templateId));
     } catch (error) {
-        yield put(actionCreators.deleteTemplateFailure(error.toString()));
+        yield put(actionCreators.deleteTemplateFailure(error));
     }
 }
 
-export {
-    getRequest,
-    getTemplateRequest,
-    postTemplateRequest,
-    putTemplateRequest,
-    deleteTemplateRequest
-};
-
 export default (function* () {
     yield all([
-        takeLatest(actionTypes.TEMPLATES_REQUEST, getRequest),
-        takeLatest(actionTypes.TEMPLATE_REQUEST, getTemplateRequest),
-        takeLatest(actionTypes.POST_TEMPLATE_REQUEST, postTemplateRequest),
-        takeLatest(actionTypes.PUT_TEMPLATE_REQUEST, putTemplateRequest),
-        takeLatest(actionTypes.DELETE_TEMPLATE_REQUEST, deleteTemplateRequest)
+        takeLatest(actionTypes.GET_TEMPLATES, getTemplates),
+        takeLatest(actionTypes.GET_TEMPLATE_CONTENT, getTemplateContent),
+        takeLatest(actionTypes.POST_TEMPLATE, postTemplate),
+        takeLatest(actionTypes.PUT_TEMPLATE_CONTENT, putTemplateContent),
+        takeLatest(actionTypes.DELETE_TEMPLATE, deleteTemplate)
     ]);
 })();

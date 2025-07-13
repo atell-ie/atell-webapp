@@ -58,6 +58,7 @@
         "date-fns": "^2.30.0",
         "dayjs": "^1.11.7",
         "fake-indexeddb": "^4.0.1",
+        "file-saver": "^2.0.5",
         "html-webpack-plugin": "5.5.1",
         "http-status-codes": "^2.2.0",
         "humps": "^2.0.1",

@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDebouncedCallback } from "use-debounce";
 import actions from "../../Store/actions";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Box } from "@mui/material";
 
 export default ({ isTemplate, section, index, updateSection }) => {
     const dispatch = useDispatch();
@@ -24,16 +24,39 @@ export default ({ isTemplate, section, index, updateSection }) => {
     }, 500);
 
     return (
-        <Grid item xs={12} key={index} sx={{ padding: "1rem 0" }}>
+        <Box sx={{ mb: 3 }}>
             <TextField
                 fullWidth
                 required
                 margin="dense"
                 id="title"
-                label="Title"
+                label="Section Title"
                 onChange={(e) => hdlDebounce(e.target.value, index)}
                 defaultValue={titleValue}
+                placeholder="Enter a descriptive title for this section"
+                sx={{
+                    "& .MuiOutlinedInput-root": {
+                        backgroundColor: "#f8f9fa",
+                        borderRadius: "8px",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#1976d2"
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#1976d2"
+                        }
+                    },
+                    "& .MuiInputLabel-root": {
+                        fontWeight: 500,
+                        color: "#555"
+                    },
+                    "& .MuiInputBase-input": {
+                        fontSize: "1.1rem",
+                        fontWeight: 600
+                    }
+                }}
             />
-        </Grid>
+        </Box>
     );
 };
